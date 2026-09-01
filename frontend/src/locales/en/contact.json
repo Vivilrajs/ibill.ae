@@ -1,0 +1,29 @@
+{
+  "heroKicker": "Contact Us",
+  "heroTitle": "Get in touch with IBILL",
+  "heroBody": "Have a question or need assistance? We're here to help. Reach out to us today to learn more about our accounting services and software solutions.",
+  "infoTitle": "Get Information",
+  "infoBody": "Have a question or need assistance? We're here to help. Reach out to us today to learn more about our accounting services and software solutions.",
+  "labels": {
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "workHours": "Work Hours"
+  },
+  "formTitle": "Send us a message",
+  "formBody": "We usually respond within one business day.",
+  "mapTitle": "IBILL Software FZ LLC location",
+  "leadForm": {
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@company.com",
+    "phone": "Phone",
+    "phonePlaceholder": "+971 ...",
+    "message": "Message",
+    "messagePlaceholder": "How can we help?",
+    "submit": "Send Message",
+    "success": "Thanks - we'll be in touch shortly.",
+    "error": "Something went wrong. Please try again or email us directly."
+  }
+}

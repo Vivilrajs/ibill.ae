@@ -7,6 +7,7 @@ import type {
   TeamMember,
   Testimonial,
   Faq,
+  MaintenancePlan,
   SiteSettings,
   Lead,
   ResourceKey,
@@ -51,6 +52,12 @@ export const useTestimonials = () =>
 
 export const useFaqs = () =>
   useQuery({ queryKey: ["faqs"], queryFn: list<Faq>("/faqs") });
+
+export const useMaintenancePlans = () =>
+  useQuery({
+    queryKey: ["maintenancePlans"],
+    queryFn: list<MaintenancePlan>("/maintenance-plans"),
+  });
 
 export const useSettings = () =>
   useQuery({

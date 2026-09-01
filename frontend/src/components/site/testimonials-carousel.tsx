@@ -1,5 +1,6 @@
 
 import { Quote } from "lucide-react";
+import { useLang } from "@/lib/lang-context";
 import {
   Carousel,
   CarouselContent,
@@ -16,15 +17,16 @@ export interface TestimonialItem {
 }
 
 export function TestimonialsCarousel({ items }: { items: TestimonialItem[] }) {
+  const { dir } = useLang();
   if (!items.length) return null;
   return (
-    <Carousel opts={{ loop: true, align: "start" }} className="w-full">
+    <Carousel opts={{ loop: true, align: "start", direction: dir }} className="w-full">
       <CarouselContent>
         {items.map((t) => (
           <CarouselItem key={t.id}>
             <figure className="relative rounded-3xl border border-border bg-card p-8 shadow-soft sm:p-12">
               <Quote
-                className="absolute right-8 top-8 size-14 text-brand-100"
+                className="absolute end-8 top-8 size-14 text-brand-100"
                 aria-hidden
               />
               <blockquote className="relative max-w-3xl text-lg leading-relaxed text-brand-ink text-pretty sm:text-xl">

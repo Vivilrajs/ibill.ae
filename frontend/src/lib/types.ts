@@ -23,6 +23,8 @@ export interface Product extends WithId {
   externalUrl: string;
   icon: string;
   image: string;
+  heroImage?: string;
+  gallery?: string[];
   features: string[];
   order: number;
   published: boolean;
@@ -63,6 +65,16 @@ export interface Faq extends WithId {
   published: boolean;
 }
 
+export interface MaintenancePlan extends WithId {
+  name: string;
+  summary: string;
+  annualFee: number;
+  feeNote: string;
+  inclusions: string[];
+  order: number;
+  published: boolean;
+}
+
 export interface SiteSettings {
   phone: string;
   email: string;
@@ -95,4 +107,5 @@ export type ResourceKey =
   | "posts"
   | "team"
   | "testimonials"
+  | "maintenancePlans"
   | "faqs";

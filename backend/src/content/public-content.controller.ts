@@ -52,4 +52,9 @@ export class PublicContentController {
   async faqs() {
     return { items: await this.content.list('faqs', false) };
   }
+
+  @Get('maintenance-plans')
+  async maintenancePlans() {
+    return { items: await this.content.list('maintenancePlans', false) };
+  }
 }

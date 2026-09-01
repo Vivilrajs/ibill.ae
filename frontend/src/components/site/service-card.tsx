@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/nav";
 import { ArrowUpRight } from "lucide-react";
 import { Icon } from "@/lib/icons";
 import { IconTile } from "@/components/site/primitives";
@@ -33,7 +33,7 @@ export function ServiceCard({
         <IconTile size="lg">
           <Icon name={service.icon} />
         </IconTile>
-        <ArrowUpRight className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+        <ArrowUpRight className="size-4 text-muted-foreground opacity-0 transition-opacity rtl:-scale-x-100 group-hover:opacity-100" />
       </div>
       <div>
         <h3 className="font-heading text-lg font-semibold text-brand-ink">

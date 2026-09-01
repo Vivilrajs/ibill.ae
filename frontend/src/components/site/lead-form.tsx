@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ export function LeadForm({
   className?: string;
   compact?: boolean;
 }) {
+  const { t } = useTranslation("contact");
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -27,10 +29,10 @@ export function LeadForm({
     setLoading(true);
     try {
       await submitContact({ ...data, source });
-      toast.success("Thanks - we'll be in touch shortly.");
+      toast.success(t("leadForm.success"));
       form.reset();
     } catch {
-      toast.error("Something went wrong. Please try again or email us directly.");
+      toast.error(t("leadForm.error"));
     } finally {
       setLoading(false);
     }
@@ -39,16 +41,31 @@ export function LeadForm({
   return (
     <form onSubmit={onSubmit} className={cn("space-y-4", className)}>
       <div className={cn("grid gap-4", !compact && "sm:grid-cols-2")}>
-        <Field label="Name" name="name" placeholder="Your name" required />
-        <Field label="Email" name="email" type="email" placeholder="you@company.com" required />
+        <Field
+          label={t("leadForm.name")}
+          name="name"
+          placeholder={t("leadForm.namePlaceholder")}
+          required
+        />
+        <Field
+          label={t("leadForm.email")}
+          name="email"
+          type="email"
+          placeholder={t("leadForm.emailPlaceholder")}
+          required
+        />
       </div>
-      <Field label="Phone" name="phone" placeholder="+971 ..." />
+      <Field
+        label={t("leadForm.phone")}
+        name="phone"
+        placeholder={t("leadForm.phonePlaceholder")}
+      />
       <div className="space-y-1.5">
-        <Label htmlFor="lf-message">Message</Label>
+        <Label htmlFor="lf-message">{t("leadForm.message")}</Label>
         <Textarea
           id="lf-message"
           name="message"
-          placeholder="How can we help?"
+          placeholder={t("leadForm.messagePlaceholder")}
           rows={compact ? 3 : 4}
           required
         />
@@ -62,7 +79,7 @@ export function LeadForm({
           <Loader2 className="size-4 animate-spin" />
         ) : (
           <>
-            Send Message <ArrowRight className="size-4" />
+            {t("leadForm.submit")} <ArrowRight className="size-4 rtl:-scale-x-100" />
           </>
         )}
       </Button>

@@ -5,6 +5,7 @@ import {
   Newspaper,
   Users,
   Quote,
+  LifeBuoy,
   Inbox,
   ArrowRight,
 } from "lucide-react";
@@ -20,6 +21,7 @@ export default function AdminDashboard() {
   const posts = useAdminList("posts").data ?? [];
   const team = useAdminList("team").data ?? [];
   const testimonials = useAdminList("testimonials").data ?? [];
+  const maintenancePlans = useAdminList("maintenancePlans").data ?? [];
   const leads = useLeads().data ?? [];
 
   const cards = [
@@ -28,6 +30,7 @@ export default function AdminDashboard() {
     { label: "Blog posts", count: posts.length, to: "/admin/blog", icon: Newspaper },
     { label: "Team members", count: team.length, to: "/admin/team", icon: Users },
     { label: "Testimonials", count: testimonials.length, to: "/admin/testimonials", icon: Quote },
+    { label: "Maintenance plans", count: maintenancePlans.length, to: "/admin/maintenance-plans", icon: LifeBuoy },
     { label: "Leads", count: leads.length, to: "/admin/leads", icon: Inbox },
   ];
 

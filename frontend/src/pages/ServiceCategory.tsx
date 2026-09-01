@@ -1,37 +1,45 @@
-import { Navigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowRight } from "lucide-react";
+import { Link, Navigate } from "@/lib/nav";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, IconTile } from "@/components/site/primitives";
 import { Stagger, StaggerItem } from "@/components/site/motion";
 import { CtaBand } from "@/components/site/cta-band";
 import { Icon } from "@/lib/icons";
-import { SERVICE_CATEGORY_META } from "@/lib/pages-content";
 import { Seo } from "@/lib/seo";
 import { useServices } from "@/lib/queries";
 
 type ServiceCategory = "accounting" | "it";
 
 export default function ServiceCategoryPage() {
+  const { t } = useTranslation("services");
   const { category } = useParams<{ category: string }>();
-  const meta = SERVICE_CATEGORY_META[category as ServiceCategory];
+  const isValid = category === "accounting" || category === "it";
   const services = (useServices().data ?? []).filter(
     (s) => s.category === category,
   );
 
-  if (!meta) return <Navigate to="/404" replace />;
+  if (!isValid) return <Navigate to="/404" replace />;
+  const cat = category as ServiceCategory;
+  const other: ServiceCategory = cat === "accounting" ? "it" : "accounting";
+  const title = t(`categories.${cat}.title`);
+  const intro = t(`categories.${cat}.intro`);
 
   return (
     <>
-      <Seo title={meta.title} description={meta.intro} path={meta.href} />
+      <Seo
+        pageKey={cat === "it" ? "servicesIt" : "servicesAccounting"}
+        path={`/services/${cat}`}
+      />
       <PageHero
-        kicker="Services"
-        title={meta.title}
-        body={meta.intro}
-        image={category === "it" ? "/images/it.jpg" : "/images/accounting.jpg"}
+        kicker={t("categoryHeroKicker")}
+        title={title}
+        body={intro}
+        image={cat === "it" ? "/images/it.jpg" : "/images/accounting.jpg"}
         crumbs={[
-          { label: "Services", href: "/services" },
-          { label: meta.title },
+          { label: t("heroKicker"), href: "/services" },
+          { label: title },
         ]}
       />
 
@@ -60,8 +68,8 @@ export default function ServiceCategoryPage() {
                       to="/contact"
                       className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600"
                     >
-                      Enquire about this service{" "}
-                      <ArrowRight className="size-3.5" />
+                      {t("common:buttons.enquireService")}{" "}
+                      <ArrowRight className="size-3.5 rtl:-scale-x-100" />
                     </Link>
                   </div>
                 </div>
@@ -70,16 +78,14 @@ export default function ServiceCategoryPage() {
           </Stagger>
 
           <div className="mt-12 rounded-2xl border border-border bg-secondary/60 p-6 text-sm text-muted-foreground">
-            Looking for{" "}
+            {t("coverBothPrefix")}
             <Link
-              to={
-                category === "accounting" ? "/services/it" : "/services/accounting"
-              }
+              to={`/services/${other}`}
               className="font-semibold text-brand-600"
             >
-              {category === "accounting" ? "IT Services" : "Accounting Services"}
+              {t(`categories.${other}.title`)}
             </Link>
-            ? We cover both.
+            {t("coverBothSuffix")}
           </div>
         </div>
       </Section>

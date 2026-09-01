@@ -1,7 +1,8 @@
 /**
- * Post-SSG: set the correct <title> per prerendered page (react-helmet-async
- * writes meta/link but not <title> reliably), mark admin/404 noindex, and emit
- * sitemap.xml + robots.txt.
+ * Post-SSG: normalise <html lang/dir>, set the correct <title> per prerendered
+ * page and locale (helmet writes meta/link but not <title> reliably), inject
+ * hreflang alternates, mark admin/404 noindex, and emit a bilingual sitemap.xml
+ * plus robots.txt.
  */
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -9,19 +10,36 @@ import { join, relative } from "node:path";
 const DIST = new URL("../dist/", import.meta.url).pathname;
 const SITE_URL = (process.env.VITE_SITE_URL || "https://ibill.ae").replace(/\/$/, "");
 const NAME = "IBILL";
-const TAGLINE = "Your Professional Accounting & Software Firm";
+const TAGLINE_EN = "Your Professional Accounting & Software Firm";
+const TAGLINE_AR = "شريكك المحترف في المحاسبة والبرمجيات";
 
+const DIR = { en: "ltr", ar: "rtl" };
+
+/** route stem (relative html path, no locale prefix) -> { en, ar } <title> */
 const TITLES = {
-  "index.html": `${NAME} - ${TAGLINE}`,
-  "about.html": `About Us - ${NAME}`,
-  "services.html": `Services - ${NAME}`,
-  "services/accounting.html": `Accounting Services - ${NAME}`,
-  "services/it.html": `IT Services - ${NAME}`,
-  "products.html": `Products - ${NAME}`,
-  "products/salon-assist.html": `Salon Assist - ${NAME}`,
-  "blog.html": `Blog - ${NAME}`,
-  "contact.html": `Contact Us - ${NAME}`,
-  "404.html": `Page not found - ${NAME}`,
+  "index.html": { en: `${NAME} - ${TAGLINE_EN}`, ar: `${NAME} - ${TAGLINE_AR}` },
+  "about.html": { en: `About Us - ${NAME}`, ar: `من نحن - ${NAME}` },
+  "services.html": { en: `Services - ${NAME}`, ar: `خدماتنا - ${NAME}` },
+  "services/accounting.html": {
+    en: `Accounting Services - ${NAME}`,
+    ar: `خدمات المحاسبة - ${NAME}`,
+  },
+  "services/it.html": {
+    en: `IT Services - ${NAME}`,
+    ar: `خدمات تقنية المعلومات - ${NAME}`,
+  },
+  "products.html": { en: `Products - ${NAME}`, ar: `المنتجات - ${NAME}` },
+  "products/salon-assist.html": {
+    en: `Salon Assist - ${NAME}`,
+    ar: `Salon Assist - ${NAME}`,
+  },
+  "maintenance-plans.html": {
+    en: `Annual Maintenance Plan - ${NAME}`,
+    ar: `خطة الصيانة السنوية - ${NAME}`,
+  },
+  "blog.html": { en: `Blog - ${NAME}`, ar: `المدونة - ${NAME}` },
+  "contact.html": { en: `Contact Us - ${NAME}`, ar: `اتصل بنا - ${NAME}` },
+  "404.html": { en: `Page not found - ${NAME}`, ar: `Page not found - ${NAME}` },
 };
 
 const PUBLIC_ROUTES = [
@@ -32,9 +50,12 @@ const PUBLIC_ROUTES = [
   "/services/it",
   "/products",
   "/products/salon-assist",
+  "/maintenance-plans",
   "/blog",
   "/contact",
 ];
+
+const esc = (s) => s.replace(/&/g, "&amp;");
 
 function walk(dir) {
   const out = [];
@@ -46,20 +67,49 @@ function walk(dir) {
   return out;
 }
 
+/** stem ("about.html", "services/it.html", "index.html") -> route ("/about") or null */
+function stemToRoute(stem) {
+  if (stem.startsWith("admin")) return null;
+  if (stem === "404.html") return null;
+  if (stem === "index.html") return "/";
+  return "/" + stem.replace(/\.html$/, "").replace(/\/index$/, "");
+}
+
 for (const file of walk(DIST)) {
   const rel = relative(DIST, file);
+  const isAr = rel === "ar.html" || rel.startsWith("ar/");
+  const lng = isAr ? "ar" : "en";
+  const stem =
+    rel === "ar.html" ? "index.html" : isAr ? rel.slice(3) : rel;
   let html = readFileSync(file, "utf8");
 
-  const title = TITLES[rel];
+  html = html.replace(
+    /<html\b[^>]*>/i,
+    `<html lang="${lng}" dir="${DIR[lng]}" class="light">`,
+  );
+
+  const title = TITLES[stem]?.[lng];
   if (title) {
     html = html.replace(
       /<title>[\s\S]*?<\/title>/,
-      `<title>${title.replace(/&/g, "&amp;")}</title>`,
+      `<title>${esc(title)}</title>`,
     );
   }
 
-  const isAdmin = rel.startsWith("admin");
-  const is404 = rel === "404.html";
+  const route = stemToRoute(stem);
+  if (route && !/hreflang="ar"/.test(html)) {
+    const p = route === "/" ? "" : route;
+    html = html.replace(
+      /<\/head>/,
+      `  <link rel="alternate" hreflang="en" href="${SITE_URL}${p}">\n` +
+        `  <link rel="alternate" hreflang="ar" href="${SITE_URL}/ar${p}">\n` +
+        `  <link rel="alternate" hreflang="x-default" href="${SITE_URL}${p}">\n` +
+        `</head>`,
+    );
+  }
+
+  const isAdmin = stem.startsWith("admin");
+  const is404 = stem === "404.html";
   if ((isAdmin || is404) && !/name="robots"/.test(html)) {
     html = html.replace(
       /<\/head>/,
@@ -70,15 +120,25 @@ for (const file of walk(DIST)) {
   writeFileSync(file, html);
 }
 
-// sitemap.xml
+// bilingual sitemap.xml
 const now = new Date().toISOString();
-const urls = PUBLIC_ROUTES.map(
-  (r) =>
-    `  <url><loc>${SITE_URL}${r === "/" ? "" : r}</loc><lastmod>${now}</lastmod></url>`,
-).join("\n");
+const NS =
+  'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"';
+const urls = PUBLIC_ROUTES.flatMap((r) => {
+  const p = r === "/" ? "" : r;
+  const alts = [
+    `<xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${p}"/>`,
+    `<xhtml:link rel="alternate" hreflang="ar" href="${SITE_URL}/ar${p}"/>`,
+    `<xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${p}"/>`,
+  ].join("");
+  return [
+    `  <url><loc>${SITE_URL}${p}</loc><lastmod>${now}</lastmod>${alts}</url>`,
+    `  <url><loc>${SITE_URL}/ar${p}</loc><lastmod>${now}</lastmod>${alts}</url>`,
+  ];
+}).join("\n");
 writeFileSync(
   join(DIST, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset ${NS}>\n${urls}\n</urlset>\n`,
 );
 
 // robots.txt
@@ -87,4 +147,6 @@ writeFileSync(
   `User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: ${SITE_URL}/sitemap.xml\n`,
 );
 
-console.log(`postbuild: patched titles, wrote sitemap.xml + robots.txt (${SITE_URL})`);
+console.log(
+  `postbuild: normalised lang/dir, patched titles + hreflang, wrote bilingual sitemap.xml + robots.txt (${SITE_URL})`,
+);

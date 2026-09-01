@@ -5,6 +5,7 @@ import { PRODUCTS } from '../seed/content/products';
 import { POSTS } from '../seed/content/posts';
 import { TEAM } from '../seed/content/team';
 import { TESTIMONIALS } from '../seed/content/testimonials';
+import { MAINTENANCE_PLANS } from '../seed/content/maintenance-plans';
 import { FAQS } from '../seed/content/faqs';
 
 const slug = z
@@ -35,6 +36,8 @@ const productCreate = z.object({
   externalUrl: z.string().max(500).optional().default(''),
   icon: z.string().max(40).optional().default('Sparkles'),
   image: z.string().max(500).optional().default(''),
+  heroImage: z.string().max(500).optional().default(''),
+  gallery: z.array(z.string().max(500)).max(20).optional().default([]),
   features: strArr.optional().default([]),
   order: z.number().int().optional().default(0),
   published: z.boolean().optional().default(true),
@@ -64,6 +67,16 @@ const testimonialCreate = z.object({
   quote: z.string().min(1).max(2000),
   authorName: z.string().min(1).max(140),
   authorTitle: z.string().max(140).optional().default(''),
+  order: z.number().int().optional().default(0),
+  published: z.boolean().optional().default(true),
+});
+
+const maintenancePlanCreate = z.object({
+  name: z.string().min(1).max(140),
+  summary: z.string().max(500).optional().default(''),
+  annualFee: z.number().nonnegative().optional().default(0),
+  feeNote: z.string().max(140).optional().default(''),
+  inclusions: z.array(z.string().max(300)).max(20).optional().default([]),
   order: z.number().int().optional().default(0),
   published: z.boolean().optional().default(true),
 });
@@ -120,6 +133,13 @@ export const RESOURCES: Record<string, ResourceDef> = {
     seed: TESTIMONIALS as unknown as Record<string, unknown>[],
     createSchema: testimonialCreate,
     updateSchema: partial(testimonialCreate),
+    sort: { order: 1, createdAt: -1 },
+  },
+  maintenancePlans: {
+    model: MODELS.MaintenancePlan,
+    seed: MAINTENANCE_PLANS as unknown as Record<string, unknown>[],
+    createSchema: maintenancePlanCreate,
+    updateSchema: partial(maintenancePlanCreate),
     sort: { order: 1, createdAt: -1 },
   },
   faqs: {

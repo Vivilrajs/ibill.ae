@@ -1,0 +1,21 @@
+{
+  "heroKicker": "Our Services",
+  "heroTitle": "Expert services for every part of your business",
+  "heroBody": "We offer a range of expert services to meet the unique needs of your business.",
+  "categories": {
+    "accounting": {
+      "title": "Accounting Services",
+      "intro": "We offer a range of expert services to meet the unique needs of your business."
+    },
+    "it": {
+      "title": "IT Services",
+      "intro": "Expert solutions for software development, web development, and more. Boost efficiency, productivity, and growth with our tailored IT services."
+    }
+  },
+  "allKicker": "All Services",
+  "allTitle": "Browse the full range",
+  "allBody": "Filter by category or explore everything we do in one place.",
+  "categoryHeroKicker": "Services",
+  "coverBothPrefix": "Looking for ",
+  "coverBothSuffix": "? We cover both."
+}

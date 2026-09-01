@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
 import { Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +13,7 @@ export function ThemeToggle({
   className?: string;
 }) {
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect -- standard next-themes hydration guard
@@ -21,14 +23,14 @@ export function ThemeToggle({
   const inverted = variant === "inverted";
 
   const options = [
-    { key: "light", label: "Light mode", Icon: Sun },
-    { key: "dark", label: "Dark mode", Icon: Moon },
+    { key: "light", label: t("theme.light"), Icon: Sun },
+    { key: "dark", label: t("theme.dark"), Icon: Moon },
   ] as const;
 
   return (
     <div
       role="radiogroup"
-      aria-label="Colour theme"
+      aria-label={t("theme.label")}
       className={cn(
         "inline-flex items-center gap-0.5 rounded-full border p-0.5",
         inverted

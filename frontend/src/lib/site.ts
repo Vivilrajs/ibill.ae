@@ -26,22 +26,30 @@ export const SITE = {
   },
 } as const;
 
+/** `labelKey` resolves against the `common:nav.*` i18n namespace. */
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
+  { labelKey: "home", href: "/" },
+  { labelKey: "about", href: "/about" },
   {
-    label: "Services",
+    labelKey: "services",
     href: "/services",
     children: [
-      { label: "Accounting Services", href: "/services/accounting" },
-      { label: "IT Services", href: "/services/it" },
+      { labelKey: "accountingServices", href: "/services/accounting" },
+      { labelKey: "itServices", href: "/services/it" },
     ],
   },
   {
-    label: "Products",
+    labelKey: "products",
     href: "/products",
-    children: [{ label: "Salon Assist", href: "/products/salon-assist" }],
+    children: [{ labelKey: "salonAssist", href: "/products/salon-assist" }],
   },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact Us", href: "/contact" },
+  { labelKey: "maintenancePlans", href: "/maintenance-plans" },
+  { labelKey: "blog", href: "/blog" },
+  { labelKey: "contact", href: "/contact" },
+] as const;
+
+/** Service category route metadata. Display text lives in the `services` i18n namespace. */
+export const SERVICE_CATEGORIES = [
+  { key: "accounting", href: "/services/accounting" },
+  { key: "it", href: "/services/it" },
 ] as const;

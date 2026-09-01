@@ -1,6 +1,7 @@
-import { Navigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowUpRight, Check, Loader2 } from "lucide-react";
+import { Link, Navigate } from "@/lib/nav";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/site/primitives";
 import { Media } from "@/components/site/media";
@@ -10,6 +11,7 @@ import { Seo } from "@/lib/seo";
 import { useProduct } from "@/lib/queries";
 
 export default function ProductDetailPage() {
+  const { t } = useTranslation("products");
   const { slug = "" } = useParams<{ slug: string }>();
   const { data: product, isLoading, isError } = useProduct(slug);
 
@@ -32,11 +34,12 @@ export default function ProductDetailPage() {
         path={`/products/${product.slug}`}
       />
       <PageHero
-        kicker="Product"
+        kicker={t("detailHeroKicker")}
         title={product.name}
         body={product.tagline}
+        image={product.heroImage || undefined}
         crumbs={[
-          { label: "Products", href: "/products" },
+          { label: t("listHeroKicker"), href: "/products" },
           { label: product.name },
         ]}
       />
@@ -71,7 +74,8 @@ export default function ProductDetailPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open {product.name} <ArrowUpRight className="size-4" />
+                  {t("detailOpen", { name: product.name })}{" "}
+                  <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                 </a>
               </Button>
             )}
@@ -81,18 +85,38 @@ export default function ProductDetailPage() {
             <Media src={product.image} className="aspect-[4/3] w-full" />
             <div className="mt-6 rounded-2xl border border-border bg-card p-6">
               <h2 className="font-heading font-semibold text-brand-ink">
-                Interested in {product.name}?
+                {t("detailInterestedTitle", { name: product.name })}
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Get a walkthrough and pricing for your business.
+                {t("detailInterestedBody")}
               </p>
               <Button asChild className="mt-4 w-full">
-                <Link to="/contact">Request a demo</Link>
+                <Link to="/contact">{t("detailRequestDemo")}</Link>
               </Button>
             </div>
           </aside>
         </div>
       </Section>
+
+      {product.gallery && product.gallery.length > 0 && (
+        <Section className="pt-0">
+          <div className="container-x">
+            <h2 className="font-heading text-2xl font-semibold text-brand-ink">
+              {t("screenshots")}
+            </h2>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {product.gallery.map((src, i) => (
+                <Media
+                  key={src}
+                  src={src}
+                  alt={t("screenshotAlt", { name: product.name, index: i + 1 })}
+                  className="aspect-[16/10] w-full"
+                />
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
 
       <CtaBand />
     </>

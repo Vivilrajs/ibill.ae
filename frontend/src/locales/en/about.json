@@ -1,0 +1,33 @@
+{
+  "kicker": "About IBILL",
+  "heroTitle": "About IBILL",
+  "heroBody": "At IBILL Software and Consultancy, we specialize in crafting bespoke software applications and providing comprehensive accounts consultancy. Our team of seasoned professionals brings a wealth of experience and expertise, ensuring that we meet and exceed the unique needs of our clients.",
+  "valuePillars": [
+    { "label": "Expertise", "line": "Trusted guidance for your business" },
+    { "label": "Innovate", "line": "Cutting-edge software solutions" },
+    { "label": "Results", "line": "Proven track record of success" }
+  ],
+  "journeyKicker": "Our Journey",
+  "journeyTitle": "Our Journey",
+  "journeyBody": "Since our inception, we have developed numerous mobile applications tailored to streamline business operations and enhance productivity. Our portfolio showcases a diverse range of projects, each reflecting our commitment to quality and innovation. We take pride in our ability to adapt to the ever-evolving technological landscape, consistently delivering solutions that are both cutting-edge and practical.",
+  "realKicker": "About IBILL",
+  "realTitle": "Real Accounting Services For You",
+  "realBody": [
+    "Experience personalized expertise with our comprehensive accounting solutions, tailored to meet the unique needs of your business, ensuring accuracy, efficiency, and growth.",
+    "At IBILL, we pride ourselves on our team of dedicated professionals, who bring years of experience and a passion for excellence to every project. Our goal is to provide exceptional guidance and support, helping businesses like yours thrive in an ever-changing landscape."
+  ],
+  "achievementKicker": "Achievement",
+  "achievementTitle": "Numbers That Speak",
+  "whatSetsKicker": "Why Choose Us",
+  "whatSetsTitle": "What sets our team apart",
+  "whatSetsBody": "IBILL Accounting & Software offers expert accounting solutions, innovative software, and personalized support to UAE businesses, helping them streamline financial management, enhance efficiency, and drive growth.",
+  "teamTags": ["Expertise", "Knowledge", "Communication"],
+  "teamKicker": "Our Team",
+  "teamTitle": "Meet The Team",
+  "teamEmpty": "Team profiles are being updated. Check back soon.",
+  "stats": {
+    "statExperienceYears": "Years of Experience",
+    "statProjectsDone": "Projects Done",
+    "statHappyClients": "Happy Clients"
+  }
+}

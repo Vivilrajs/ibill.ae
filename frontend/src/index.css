@@ -251,6 +251,27 @@
   animation-play-state: paused;
 }
 
+/* Arabic / RTL - keyed on [dir=rtl] which postbuild + HtmlDirEffect set on <html> */
+[dir="rtl"] body,
+[dir="rtl"] .font-sans {
+  font-family: "IBM Plex Sans Arabic", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+[dir="rtl"] .font-heading,
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5 {
+  font-family: "Cairo", "IBM Plex Sans Arabic", "Sora", sans-serif;
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+[dir="rtl"] .animate-marquee {
+  animation-name: marquee-rtl;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   * { scroll-behavior: auto !important; }

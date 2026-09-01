@@ -1,0 +1,17 @@
+{
+  "listHeroKicker": "Products",
+  "listHeroTitle": "Software built to run your business",
+  "listHeroBody": "Purpose-built applications from the IBILL software team.",
+  "learnMore": "Learn more",
+  "visitSite": "Visit site",
+  "listCtaTitle": "Need a custom application?",
+  "listCtaBody": "We build billing software, mobile apps and websites tailored to your operations.",
+  "listCtaButton": "Talk to our team",
+  "detailHeroKicker": "Product",
+  "detailOpen": "Open {{name}}",
+  "screenshots": "Screenshots",
+  "screenshotAlt": "{{name}} screenshot {{index}}",
+  "detailInterestedTitle": "Interested in {{name}}?",
+  "detailInterestedBody": "Get a walkthrough and pricing for your business.",
+  "detailRequestDemo": "Request a demo"
+}

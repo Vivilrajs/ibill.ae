@@ -22,7 +22,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
           value={f.id}
           className="border-b border-border py-1"
         >
-          <AccordionTrigger className="text-left font-heading text-base font-semibold text-brand-ink hover:no-underline">
+          <AccordionTrigger className="text-start font-heading text-base font-semibold text-brand-ink hover:no-underline">
             {f.question}
           </AccordionTrigger>
           <AccordionContent className="text-sm leading-relaxed text-muted-foreground">

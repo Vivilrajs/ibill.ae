@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@/lib/nav";
 import { Img as Image } from "@/components/img";
 import { cn } from "@/lib/utils";
 

@@ -15,6 +15,7 @@ import {
   PostSchema,
   TeamMemberSchema,
   TestimonialSchema,
+  MaintenancePlanSchema,
   FaqSchema,
   SiteSettingsSchema,
 } from '../schemas/schemas';
@@ -23,6 +24,7 @@ import { PRODUCTS } from './content/products';
 import { POSTS } from './content/posts';
 import { TEAM } from './content/team';
 import { TESTIMONIALS } from './content/testimonials';
+import { MAINTENANCE_PLANS } from './content/maintenance-plans';
 import { FAQS } from './content/faqs';
 import { SITE_SETTINGS } from './content/settings';
 
@@ -66,6 +68,11 @@ async function main() {
     'testimonials',
     m('Testimonial', TestimonialSchema),
     TESTIMONIALS,
+  );
+  await seedCollection(
+    'maintenancePlans',
+    m('MaintenancePlan', MaintenancePlanSchema),
+    MAINTENANCE_PLANS,
   );
   await seedCollection('faqs', m('Faq', FaqSchema), FAQS);
 
