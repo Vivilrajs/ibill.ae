@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, SectionHeading, IconTile } from "@/components/site/primitives";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/motion";
@@ -5,17 +6,25 @@ import { Media } from "@/components/site/media";
 import { StatCounter } from "@/components/site/stat-counter";
 import { CtaBand } from "@/components/site/cta-band";
 import { Icon } from "@/lib/icons";
-import { ABOUT, VALUE_PILLARS, HOME, STAT_LABELS } from "@/lib/pages-content";
-
-
+import {
+  VALUE_PILLAR_ICONS,
+  HOME_WHY_CHOOSE_ICONS,
+} from "@/lib/pages-content";
 import { Seo } from "@/lib/seo";
 import { useTeam, useSettings } from "@/lib/queries";
 import { SITE_SETTINGS_FALLBACK } from "@/lib/settings-fallback";
 
-
 export default function AboutPage() {
+  const { t } = useTranslation("about");
   const team = useTeam().data ?? [];
   const settings = useSettings().data ?? SITE_SETTINGS_FALLBACK;
+
+  const valuePillars = t("valuePillars", { returnObjects: true }) as {
+    label: string;
+    line: string;
+  }[];
+  const realBody = t("realBody", { returnObjects: true }) as string[];
+  const teamTags = t("teamTags", { returnObjects: true }) as string[];
 
   const stats = [
     { key: "statExperienceYears", value: settings.statExperienceYears },
@@ -25,22 +34,22 @@ export default function AboutPage() {
 
   return (
     <>
-      <Seo title="About Us" path="/about" />
+      <Seo pageKey="about" path="/about" />
       <PageHero
-        kicker={ABOUT.kicker}
-        title="About IBILL"
-        body={ABOUT.whoBody}
+        kicker={t("kicker")}
+        title={t("heroTitle")}
+        body={t("heroBody")}
         image="/images/who-we-are.jpg"
-        crumbs={[{ label: "About Us" }]}
+        crumbs={[{ label: t("kicker") }]}
       />
 
       {/* Value pillars */}
       <div className="container-x relative z-10 -mt-10">
         <Stagger className="grid divide-y divide-border rounded-2xl border border-border bg-card shadow-soft sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          {VALUE_PILLARS.map((p) => (
-            <StaggerItem key={p.key} className="flex items-center gap-4 p-6">
+          {valuePillars.map((p, i) => (
+            <StaggerItem key={i} className="flex items-center gap-4 p-6">
               <IconTile>
-                <Icon name={p.icon} />
+                <Icon name={VALUE_PILLAR_ICONS[i]} />
               </IconTile>
               <div>
                 <div className="font-heading text-sm font-semibold uppercase tracking-wide text-brand-700">
@@ -58,9 +67,9 @@ export default function AboutPage() {
         <div className="container-x grid items-center gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading
-              kicker="Our Journey"
-              title={ABOUT.journeyTitle}
-              body={ABOUT.journeyBody}
+              kicker={t("journeyKicker")}
+              title={t("journeyTitle")}
+              body={t("journeyBody")}
             />
           </div>
           <Reveal>
@@ -77,12 +86,12 @@ export default function AboutPage() {
           </Reveal>
           <div>
             <SectionHeading
-              kicker={HOME.aboutKicker}
-              title={HOME.aboutTitle}
-              body={HOME.aboutBody[0]}
+              kicker={t("realKicker")}
+              title={t("realTitle")}
+              body={realBody[0]}
             />
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              {HOME.aboutBody[1]}
+              {realBody[1]}
             </p>
           </div>
         </div>
@@ -100,8 +109,8 @@ export default function AboutPage() {
         />
         <div className="container-x relative">
           <SectionHeading
-            kicker={ABOUT.achievementKicker}
-            title={<span className="text-white">{ABOUT.achievementTitle}</span>}
+            kicker={t("achievementKicker")}
+            title={<span className="text-white">{t("achievementTitle")}</span>}
             align="center"
           />
           <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-10 text-center sm:grid-cols-3">
@@ -109,7 +118,7 @@ export default function AboutPage() {
               <StatCounter
                 key={s.key}
                 value={s.value}
-                label={STAT_LABELS[s.key as keyof typeof STAT_LABELS]}
+                label={t(`stats.${s.key}`)}
               />
             ))}
           </div>
@@ -120,21 +129,21 @@ export default function AboutPage() {
       <Section>
         <div className="container-x">
           <SectionHeading
-            kicker={HOME.whyChooseTitle}
-            title="What sets our team apart"
-            body={HOME.whyChooseBody}
+            kicker={t("whatSetsKicker")}
+            title={t("whatSetsTitle")}
+            body={t("whatSetsBody")}
           />
           <Stagger className="mt-12 grid gap-6 sm:grid-cols-3">
-            {HOME.whyChooseTags.map((t) => (
+            {teamTags.map((label, i) => (
               <StaggerItem
-                key={t.label}
+                key={i}
                 className="rounded-2xl border border-border bg-card p-6"
               >
                 <IconTile size="lg">
-                  <Icon name={t.icon} />
+                  <Icon name={HOME_WHY_CHOOSE_ICONS[i]} />
                 </IconTile>
                 <h3 className="mt-4 font-heading text-lg font-semibold text-brand-ink">
-                  {t.label}
+                  {label}
                 </h3>
               </StaggerItem>
             ))}
@@ -146,8 +155,8 @@ export default function AboutPage() {
       <Section tint>
         <div className="container-x">
           <SectionHeading
-            kicker={ABOUT.teamKicker}
-            title={ABOUT.teamTitle}
+            kicker={t("teamKicker")}
+            title={t("teamTitle")}
             align="center"
           />
           {team.length > 0 ? (
@@ -172,7 +181,7 @@ export default function AboutPage() {
             </Stagger>
           ) : (
             <p className="mx-auto mt-10 max-w-md text-center text-muted-foreground">
-              {ABOUT.teamEmpty}
+              {t("teamEmpty")}
             </p>
           )}
         </div>

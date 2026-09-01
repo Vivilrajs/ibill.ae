@@ -42,6 +42,8 @@ export interface IProduct {
   externalUrl: string;
   icon: string;
   image: string;
+  heroImage: string;
+  gallery: string[];
   features: string[];
   order: number;
   published: boolean;
@@ -57,6 +59,8 @@ export const ProductSchema = new Schema<IProduct>(
     externalUrl: { type: String, default: '' },
     icon: { type: String, default: 'Sparkles' },
     image: { type: String, default: '' },
+    heroImage: { type: String, default: '' },
+    gallery: { type: [String], default: [] },
     features: { type: [String], default: [] },
     order: { type: Number, default: 0, index: true },
     published: { type: Boolean, default: true },
@@ -129,6 +133,31 @@ export const TestimonialSchema = new Schema<ITestimonial>(
     quote: { type: String, required: true },
     authorName: { type: String, required: true, trim: true },
     authorTitle: { type: String, default: '' },
+    order: { type: Number, default: 0, index: true },
+    published: { type: Boolean, default: true },
+  },
+  opts,
+);
+
+/* ---------------------------- MaintenancePlan ----------------------------- */
+export interface IMaintenancePlan {
+  name: string;
+  summary: string;
+  annualFee: number;
+  feeNote: string;
+  inclusions: string[];
+  order: number;
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export const MaintenancePlanSchema = new Schema<IMaintenancePlan>(
+  {
+    name: { type: String, required: true, trim: true },
+    summary: { type: String, default: '' },
+    annualFee: { type: Number, default: 0 },
+    feeNote: { type: String, default: '' },
+    inclusions: { type: [String], default: [] },
     order: { type: Number, default: 0, index: true },
     published: { type: Boolean, default: true },
   },
@@ -221,6 +250,7 @@ export const MODELS = {
   Post: 'Post',
   TeamMember: 'TeamMember',
   Testimonial: 'Testimonial',
+  MaintenancePlan: 'MaintenancePlan',
   Faq: 'Faq',
   SiteSettings: 'SiteSettings',
   Lead: 'Lead',
@@ -232,6 +262,7 @@ export const MONGOOSE_FEATURES = [
   { name: MODELS.Post, schema: PostSchema },
   { name: MODELS.TeamMember, schema: TeamMemberSchema },
   { name: MODELS.Testimonial, schema: TestimonialSchema },
+  { name: MODELS.MaintenancePlan, schema: MaintenancePlanSchema },
   { name: MODELS.Faq, schema: FaqSchema },
   { name: MODELS.SiteSettings, schema: SiteSettingsSchema },
   { name: MODELS.Lead, schema: LeadSchema },

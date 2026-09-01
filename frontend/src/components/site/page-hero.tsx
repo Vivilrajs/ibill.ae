@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link } from "@/lib/nav";
 import { Img as Image } from "@/components/img";
 import { ChevronRight } from "lucide-react";
 import { Kicker } from "@/components/site/primitives";
@@ -17,6 +18,7 @@ export function PageHero({
   crumbs?: { label: string; href?: string }[];
   image?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <section className="relative -mt-16 overflow-hidden bg-[#0b1f33] pb-16 pt-32 text-white lg:-mt-20 lg:pb-20 lg:pt-40">
       {image ? (
@@ -46,11 +48,11 @@ export function PageHero({
       <div className="container-x relative">
         <nav className="flex flex-wrap items-center gap-1.5 text-xs text-white/60">
           <Link to="/" className="hover:text-white">
-            Home
+            {t("breadcrumb.home")}
           </Link>
           {crumbs.map((c) => (
             <span key={c.label} className="flex items-center gap-1.5">
-              <ChevronRight className="size-3" />
+              <ChevronRight className="size-3 rtl:-scale-x-100" />
               {c.href ? (
                 <Link to={c.href} className="hover:text-white">
                   {c.label}

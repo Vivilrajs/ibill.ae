@@ -1,12 +1,15 @@
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Menu, ChevronDown, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "@/lib/nav";
+import { useLang } from "@/lib/lang-context";
 import { NAV_LINKS } from "@/lib/site";
 import { Logo } from "@/components/site/logo";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { LanguageSwitcher } from "@/components/site/language-switcher";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -22,12 +25,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const OVER_HERO_ROUTES = ["/"];
+const OVER_HERO_ROUTES = ["/", "/ar"];
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useLocation().pathname;
+  const { dir } = useLang();
+  const { t } = useTranslation();
   const overHero = OVER_HERO_ROUTES.includes(pathname);
 
   useEffect(() => {
@@ -38,6 +43,8 @@ export function SiteHeader() {
   }, []);
 
   const solid = scrolled || !overHero;
+
+  const label = (link: (typeof NAV_LINKS)[number]) => t(`nav.${link.labelKey}`);
 
   return (
     <header
@@ -55,8 +62,9 @@ export function SiteHeader() {
           {NAV_LINKS.map((link) => {
             const active =
               link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
+                ? pathname === "/" || pathname === "/ar"
+                : pathname.replace(/^\/ar/, "").startsWith(link.href) ||
+                  pathname.startsWith(link.href);
             if (!("children" in link) || !link.children) {
               return (
                 <Link
@@ -71,7 +79,7 @@ export function SiteHeader() {
                       : "text-white/85 hover:text-white",
                   )}
                 >
-                  {link.label}
+                  {label(link)}
                 </Link>
               );
             }
@@ -88,10 +96,10 @@ export function SiteHeader() {
                       : "text-white/85 hover:text-white",
                   )}
                 >
-                  {link.label}
+                  {label(link)}
                   <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" />
                 </Link>
-                <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div className="invisible absolute start-0 top-full pt-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                   <div className="w-64 rounded-xl border border-border bg-popover p-2 shadow-float">
                     {link.children.map((c) => (
                       <Link
@@ -99,8 +107,8 @@ export function SiteHeader() {
                         to={c.href}
                         className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700"
                       >
-                        {c.label}
-                        <ArrowRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-60" />
+                        {t(`nav.${c.labelKey}`)}
+                        <ArrowRight className="size-3.5 opacity-0 transition-opacity rtl:-scale-x-100 group-hover:opacity-60" />
                       </Link>
                     ))}
                   </div>
@@ -111,6 +119,10 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher
+            variant={solid ? "default" : "inverted"}
+            className="hidden sm:inline-flex"
+          />
           <ThemeToggle
             variant={solid ? "default" : "inverted"}
             className="hidden sm:inline-flex"
@@ -119,7 +131,7 @@ export function SiteHeader() {
             asChild
             className="hidden bg-gradient-brand text-white shadow-soft hover:opacity-95 lg:inline-flex"
           >
-            <Link to="/contact">Get a Consultation</Link>
+            <Link to="/contact">{t("header.getConsultation")}</Link>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -128,14 +140,17 @@ export function SiteHeader() {
                 variant="ghost"
                 size="icon"
                 className={cn("lg:hidden", !solid && "text-white hover:bg-white/10")}
-                aria-label="Open menu"
+                aria-label={t("header.openMenu")}
               >
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[88vw] max-w-sm p-0">
+            <SheetContent
+              side={dir === "rtl" ? "left" : "right"}
+              className="w-[88vw] max-w-sm p-0"
+            >
               <SheetHeader className="border-b border-border px-5">
-                <SheetTitle className="text-left">
+                <SheetTitle className="text-start">
                   <Logo href={null} />
                 </SheetTitle>
               </SheetHeader>
@@ -145,15 +160,15 @@ export function SiteHeader() {
                     <Accordion key={link.href} type="single" collapsible>
                       <AccordionItem value={link.href} className="border-none">
                         <AccordionTrigger className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:no-underline">
-                          {link.label}
+                          {label(link)}
                         </AccordionTrigger>
-                        <AccordionContent className="pb-1 pl-3">
+                        <AccordionContent className="pb-1 ps-3">
                           <Link
                             to={link.href}
                             onClick={() => setOpen(false)}
                             className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-brand-600"
                           >
-                            All {link.label}
+                            {t("header.allLink", { label: label(link) })}
                           </Link>
                           {link.children.map((c) => (
                             <Link
@@ -162,7 +177,7 @@ export function SiteHeader() {
                               onClick={() => setOpen(false)}
                               className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-brand-600"
                             >
-                              {c.label}
+                              {t(`nav.${c.labelKey}`)}
                             </Link>
                           ))}
                         </AccordionContent>
@@ -175,12 +190,16 @@ export function SiteHeader() {
                       onClick={() => setOpen(false)}
                       className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
                     >
-                      {link.label}
+                      {label(link)}
                     </Link>
                   ),
                 )}
                 <div className="mt-3 flex items-center justify-between rounded-lg bg-secondary/60 px-3 py-2">
-                  <span className="text-sm font-medium">Theme</span>
+                  <span className="text-sm font-medium">{t("language.label")}</span>
+                  <LanguageSwitcher />
+                </div>
+                <div className="flex items-center justify-between rounded-lg bg-secondary/60 px-3 py-2">
+                  <span className="text-sm font-medium">{t("header.theme")}</span>
                   <ThemeToggle />
                 </div>
                 <Button
@@ -188,7 +207,7 @@ export function SiteHeader() {
                   className="mt-2 bg-gradient-brand text-white"
                   onClick={() => setOpen(false)}
                 >
-                  <Link to="/contact">Get a Consultation</Link>
+                  <Link to="/contact">{t("header.getConsultation")}</Link>
                 </Button>
               </div>
             </SheetContent>

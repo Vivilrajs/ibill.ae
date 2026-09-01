@@ -24,6 +24,8 @@ export class ContentService {
     @InjectModel(MODELS.Post) private readonly post: Model<Doc>,
     @InjectModel(MODELS.TeamMember) private readonly team: Model<Doc>,
     @InjectModel(MODELS.Testimonial) private readonly testimonial: Model<Doc>,
+    @InjectModel(MODELS.MaintenancePlan)
+    private readonly maintenancePlan: Model<Doc>,
     @InjectModel(MODELS.Faq) private readonly faq: Model<Doc>,
   ) {}
 
@@ -39,6 +41,8 @@ export class ContentService {
         return this.team;
       case 'testimonials':
         return this.testimonial;
+      case 'maintenancePlans':
+        return this.maintenancePlan;
       case 'faqs':
         return this.faq;
       default:

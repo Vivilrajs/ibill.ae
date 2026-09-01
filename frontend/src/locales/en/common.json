@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "products": "Products",
+    "maintenancePlans": "Annual Maintenance Plan",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "accountingServices": "Accounting Services",
+    "itServices": "IT Services",
+    "salonAssist": "Salon Assist"
+  },
+  "header": {
+    "getConsultation": "Get a Consultation",
+    "openMenu": "Open menu",
+    "theme": "Theme",
+    "allLink": "All {{label}}"
+  },
+  "theme": {
+    "label": "Colour theme",
+    "light": "Light mode",
+    "dark": "Dark mode"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "ar": "العربية",
+    "switchTo": "Switch to {{language}}"
+  },
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "cta": {
+    "title": "Ready to streamline your finances?",
+    "body": "Talk to our team about accounting and software solutions built around your business.",
+    "button": "Get a Consultation"
+  },
+  "buttons": {
+    "learnMore": "Learn More",
+    "exploreServices": "Explore Services",
+    "viewServices": "View {{count}} services",
+    "allArticles": "All articles",
+    "readMore": "Read more",
+    "backToArticles": "Back to all articles",
+    "moreServices": "More Services",
+    "enquireService": "Enquire about this service",
+    "requestDemo": "Request a demo",
+    "sendMessage": "Send Message"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "services": "Services",
+    "getInTouch": "Get in Touch",
+    "workHours": "Work Hours",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "rights": "© {{year}} {{name}}. All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "back": "Back to home"
+  },
+  "marquee": {
+    "trustedBy": "Trusted by growing businesses"
+  },
+  "servicesExplorer": {
+    "all": "All Services",
+    "accounting": "Accounting",
+    "it": "IT Services"
+  },
+  "stats": {
+    "statExperienceYears": "Years of Experience",
+    "statProjectsDone": "Projects Done",
+    "statHappyClients": "Happy Clients"
+  }
+}

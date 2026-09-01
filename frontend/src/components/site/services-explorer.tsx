@@ -1,14 +1,15 @@
 
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ServiceCard, type ServiceCardItem } from "@/components/site/service-card";
 import { cn } from "@/lib/utils";
 
 type Filter = "all" | "accounting" | "it";
 
-const TABS: { key: Filter; label: string }[] = [
-  { key: "all", label: "All Services" },
-  { key: "accounting", label: "Accounting" },
-  { key: "it", label: "IT Services" },
+const TAB_KEYS: { key: Filter; i18n: string }[] = [
+  { key: "all", i18n: "servicesExplorer.all" },
+  { key: "accounting", i18n: "servicesExplorer.accounting" },
+  { key: "it", i18n: "servicesExplorer.it" },
 ];
 
 export function ServicesExplorer({
@@ -18,6 +19,7 @@ export function ServicesExplorer({
   services: ServiceCardItem[];
   initialCount?: number;
 }) {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState(false);
 
@@ -35,22 +37,22 @@ export function ServicesExplorer({
   return (
     <div>
       <div className="flex flex-wrap gap-2">
-        {TABS.map((t) => (
+        {TAB_KEYS.map((tab) => (
           <button
-            key={t.key}
+            key={tab.key}
             type="button"
             onClick={() => {
-              setFilter(t.key);
+              setFilter(tab.key);
               setExpanded(false);
             }}
             className={cn(
               "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
-              filter === t.key
+              filter === tab.key
                 ? "border-brand-600 bg-brand-600 text-white"
                 : "border-border bg-card text-muted-foreground hover:border-brand-200 hover:text-brand-700",
             )}
           >
-            {t.label}
+            {t(tab.i18n)}
           </button>
         ))}
       </div>
@@ -72,7 +74,7 @@ export function ServicesExplorer({
             onClick={() => setExpanded(true)}
             className="rounded-full border border-brand-200 px-6 py-2 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
           >
-            More Services
+            {t("buttons.moreServices")}
           </button>
         </div>
       )}

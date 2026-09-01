@@ -1,0 +1,43 @@
+{
+  "siteName": "IBILL",
+  "tagline": "Your Professional Accounting & Software Firm",
+  "defaultDescription": "IBILL Software and Consultancy, your trusted partner in accounts consultancy and software development. We empower businesses in India and the GCC region with innovative solutions and expert guidance.",
+  "pages": {
+    "home": {
+      "title": "",
+      "description": "IBILL Software and Consultancy, your trusted partner in accounts consultancy and software development. We empower businesses in India and the GCC region with innovative solutions and expert guidance."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "IBILL Software and Consultancy specializes in bespoke software applications and comprehensive accounts consultancy for businesses in the UAE and beyond."
+    },
+    "services": {
+      "title": "Services",
+      "description": "Expert accounting and IT services to meet the unique needs of your business - bookkeeping, tax, payroll, software and web development."
+    },
+    "servicesAccounting": {
+      "title": "Accounting Services",
+      "description": "We offer a range of expert accounting services to meet the unique needs of your business."
+    },
+    "servicesIt": {
+      "title": "IT Services",
+      "description": "Expert solutions for software development, web development, and more. Boost efficiency, productivity, and growth with our tailored IT services."
+    },
+    "products": {
+      "title": "Products",
+      "description": "Purpose-built applications from the IBILL software team, including Salon Assist."
+    },
+    "maintenancePlans": {
+      "title": "Annual Maintenance Plan",
+      "description": "Fixed-fee annual maintenance so your accounting and software stay current, secure and running."
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "News and guidance on accounting, tax, compliance and software from the IBILL team."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Get in touch with IBILL Software and Consultancy for accounting services and software solutions built around your business."
+    }
+  }
+}

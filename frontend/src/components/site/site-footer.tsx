@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Mail, Phone, MapPin } from "lucide-react";
 import {
   FacebookIcon,
@@ -7,20 +7,22 @@ import {
   YoutubeIcon,
 } from "@/components/site/social-icons";
 import { Logo } from "@/components/site/logo";
-import { SITE } from "@/lib/site";
-import { SERVICE_CATEGORY_META } from "@/lib/pages-content";
+import { Link } from "@/lib/nav";
+import { SITE, SERVICE_CATEGORIES } from "@/lib/site";
 import type { SiteSettings as ISiteSettings } from "@/lib/types";
 
-const NAV = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact Us", href: "/contact" },
-];
+const NAV_KEYS = [
+  { key: "home", href: "/" },
+  { key: "about", href: "/about" },
+  { key: "services", href: "/services" },
+  { key: "products", href: "/products" },
+  { key: "maintenancePlans", href: "/maintenance-plans" },
+  { key: "blog", href: "/blog" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 export function SiteFooter({ settings }: { settings: ISiteSettings }) {
+  const { t } = useTranslation();
   const socials = [
     { href: settings.facebook, Icon: FacebookIcon, label: "Facebook" },
     { href: settings.instagram, Icon: InstagramIcon, label: "Instagram" },
@@ -33,7 +35,7 @@ export function SiteFooter({ settings }: { settings: ISiteSettings }) {
   return (
     <footer className="bg-[#0b1f33] text-white/70">
       <div className="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
-        <div className="lg:pr-6">
+        <div className="lg:pe-6">
           <Logo href={null} variant="inverted" />
           <p className="mt-5 text-sm leading-relaxed">{settings.companyBlurb}</p>
           {socials.length > 0 && (
@@ -55,12 +57,14 @@ export function SiteFooter({ settings }: { settings: ISiteSettings }) {
         </div>
 
         <nav>
-          <h3 className="font-heading text-sm font-semibold text-white">Navigation</h3>
+          <h3 className="font-heading text-sm font-semibold text-white">
+            {t("footer.navigation")}
+          </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {NAV.map((n) => (
+            {NAV_KEYS.map((n) => (
               <li key={n.href}>
                 <Link to={n.href} className="transition-colors hover:text-white">
-                  {n.label}
+                  {t(`nav.${n.key}`)}
                 </Link>
               </li>
             ))}
@@ -68,35 +72,42 @@ export function SiteFooter({ settings }: { settings: ISiteSettings }) {
         </nav>
 
         <div>
-          <h3 className="font-heading text-sm font-semibold text-white">Services</h3>
+          <h3 className="font-heading text-sm font-semibold text-white">
+            {t("footer.services")}
+          </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {Object.values(SERVICE_CATEGORY_META).map((c) => (
+            {SERVICE_CATEGORIES.map((c) => (
               <li key={c.href}>
                 <Link to={c.href} className="transition-colors hover:text-white">
-                  {c.title}
+                  {t(`services:categories.${c.key}.title`)}
                 </Link>
               </li>
             ))}
             <li>
-              <Link to="/products/salon-assist" className="transition-colors hover:text-white">
-                Salon Assist
+              <Link
+                to="/products/salon-assist"
+                className="transition-colors hover:text-white"
+              >
+                {t("nav.salonAssist")}
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-heading text-sm font-semibold text-white">Get in Touch</h3>
+          <h3 className="font-heading text-sm font-semibold text-white">
+            {t("footer.getInTouch")}
+          </h3>
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex gap-3">
               <Phone className="mt-0.5 size-4 shrink-0 text-brand-400" />
-              <a href={SITE.phoneHref} className="hover:text-white">
+              <a href={SITE.phoneHref} className="hover:text-white" dir="ltr">
                 {settings.phone}
               </a>
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-4 shrink-0 text-brand-400" />
-              <a href={`mailto:${settings.email}`} className="hover:text-white">
+              <a href={`mailto:${settings.email}`} className="hover:text-white" dir="ltr">
                 {settings.email}
               </a>
             </li>
@@ -105,7 +116,9 @@ export function SiteFooter({ settings }: { settings: ISiteSettings }) {
               <span>{settings.address}</span>
             </li>
           </ul>
-          <h3 className="mt-6 font-heading text-sm font-semibold text-white">Work Hours</h3>
+          <h3 className="mt-6 font-heading text-sm font-semibold text-white">
+            {t("footer.workHours")}
+          </h3>
           <ul className="mt-3 space-y-1.5 text-sm">
             {settings.workHours.map((w) => (
               <li key={w}>{w}</li>
@@ -116,9 +129,7 @@ export function SiteFooter({ settings }: { settings: ISiteSettings }) {
 
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-6 text-xs sm:flex-row">
-          <p>
-            &copy; {year} {SITE.legalName}. All rights reserved.
-          </p>
+          <p>{t("footer.rights", { year, name: SITE.legalName })}</p>
           <p>{SITE.address}</p>
         </div>
       </div>

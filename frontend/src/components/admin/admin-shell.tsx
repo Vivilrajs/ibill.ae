@@ -8,6 +8,7 @@ import {
   Newspaper,
   Users,
   Quote,
+  LifeBuoy,
   Settings,
   Inbox,
   LogOut,
@@ -25,6 +26,7 @@ const NAV = [
   { href: "/admin/blog", label: "Blog", icon: Newspaper },
   { href: "/admin/team", label: "Team", icon: Users },
   { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
+  { href: "/admin/maintenance-plans", label: "Maintenance plans", icon: LifeBuoy },
   { href: "/admin/leads", label: "Leads", icon: Inbox },
   { href: "/admin/settings", label: "Site settings", icon: Settings },
 ];

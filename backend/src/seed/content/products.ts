@@ -5,6 +5,8 @@ export interface ProductSeed {
   description: string;
   externalUrl: string;
   icon: string;
+  heroImage?: string;
+  gallery?: string[];
   features: string[];
   order: number;
   published: boolean;

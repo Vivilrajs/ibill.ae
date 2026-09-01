@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 const PLACEHOLDER_CLIENTS = [
   "Northline",
   "Meridian Co.",
@@ -10,11 +12,12 @@ const PLACEHOLDER_CLIENTS = [
 ];
 
 export function LogoMarquee() {
+  const { t } = useTranslation();
   const row = [...PLACEHOLDER_CLIENTS, ...PLACEHOLDER_CLIENTS];
   return (
     <div className="marquee-pause overflow-hidden">
       <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-        Trusted by growing businesses
+        {t("marquee.trustedBy")}
       </p>
       <div className="mt-6 flex w-max animate-marquee gap-12">
         {row.map((name, i) => (

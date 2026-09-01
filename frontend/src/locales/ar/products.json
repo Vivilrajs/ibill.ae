@@ -1,0 +1,17 @@
+{
+  "listHeroKicker": "المنتجات",
+  "listHeroTitle": "برمجيات مصمّمة لإدارة أعمالك",
+  "listHeroBody": "تطبيقات مصمّمة لغرض محدّد من فريق برمجيات IBILL.",
+  "learnMore": "اعرف المزيد",
+  "visitSite": "زيارة الموقع",
+  "listCtaTitle": "تحتاج إلى تطبيق مخصّص؟",
+  "listCtaBody": "نطوّر برمجيات الفوترة وتطبيقات الهاتف والمواقع المصمّمة وفق عملياتك.",
+  "listCtaButton": "تحدّث إلى فريقنا",
+  "detailHeroKicker": "منتج",
+  "detailOpen": "فتح {{name}}",
+  "screenshots": "لقطات الشاشة",
+  "screenshotAlt": "لقطة شاشة {{index}} لـ {{name}}",
+  "detailInterestedTitle": "مهتم بـ {{name}}؟",
+  "detailInterestedBody": "احصل على جولة توضيحية وأسعار مناسبة لأعمالك.",
+  "detailRequestDemo": "اطلب عرضاً توضيحياً"
+}

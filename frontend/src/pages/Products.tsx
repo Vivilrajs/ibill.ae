@@ -1,28 +1,27 @@
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link } from "@/lib/nav";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, IconTile } from "@/components/site/primitives";
 import { Stagger, StaggerItem } from "@/components/site/motion";
 import { CtaBand } from "@/components/site/cta-band";
 import { Icon } from "@/lib/icons";
-
-
 import { Seo } from "@/lib/seo";
 import { useProducts } from "@/lib/queries";
 
-
 export default function ProductsPage() {
+  const { t } = useTranslation("products");
   const products = useProducts().data ?? [];
 
   return (
     <>
-      <Seo title="Products" path="/products" />
+      <Seo pageKey="products" path="/products" />
       <PageHero
-        kicker="Products"
-        title="Software built to run your business"
-        body="Purpose-built applications from the IBILL software team."
+        kicker={t("listHeroKicker")}
+        title={t("listHeroTitle")}
+        body={t("listHeroBody")}
         image="/images/it.jpg"
-        crumbs={[{ label: "Products" }]}
+        crumbs={[{ label: t("listHeroKicker") }]}
       />
 
       <Section>
@@ -48,7 +47,8 @@ export default function ProductsPage() {
                       to={`/products/${p.slug}`}
                       className="inline-flex items-center gap-1.5 rounded-full bg-brand-600 px-5 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                     >
-                      Learn more <ArrowRight className="size-4" />
+                      {t("learnMore")}{" "}
+                      <ArrowRight className="size-4 rtl:-scale-x-100" />
                     </Link>
                     {p.externalUrl ? (
                       <a
@@ -57,7 +57,8 @@ export default function ProductsPage() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 rounded-full border border-border px-5 py-2 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
                       >
-                        Visit site <ArrowUpRight className="size-4" />
+                        {t("visitSite")}{" "}
+                        <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                       </a>
                     ) : null}
                   </div>
@@ -69,9 +70,9 @@ export default function ProductsPage() {
       </Section>
 
       <CtaBand
-        title="Need a custom application?"
-        body="We build billing software, mobile apps and websites tailored to your operations."
-        cta="Talk to our team"
+        title={t("listCtaTitle")}
+        body={t("listCtaBody")}
+        cta={t("listCtaButton")}
       />
     </>
   );

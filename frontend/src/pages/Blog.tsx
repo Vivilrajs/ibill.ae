@@ -1,37 +1,35 @@
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ArrowRight, Newspaper } from "lucide-react";
+import { Link } from "@/lib/nav";
 import { PageHero } from "@/components/site/page-hero";
 import { Section, IconTile } from "@/components/site/primitives";
 import { Stagger, StaggerItem } from "@/components/site/motion";
 import { Media } from "@/components/site/media";
 import { CtaBand } from "@/components/site/cta-band";
-import { BLOG_INTRO } from "@/lib/pages-content";
-
-
-
-function fmt(d: string | Date) {
-  return new Date(d).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
 import { Seo } from "@/lib/seo";
 import { usePosts } from "@/lib/queries";
 
-
 export default function BlogPage() {
+  const { t, i18n } = useTranslation("blog");
   const posts = usePosts().data ?? [];
   const [feature, ...rest] = posts;
 
+  const dateLocale = i18n.language === "ar" ? "ar-AE" : "en-GB";
+  const fmt = (d: string | Date) =>
+    new Date(d).toLocaleDateString(dateLocale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
   return (
     <>
-      <Seo title="Blog" path="/blog" />
+      <Seo pageKey="blog" path="/blog" />
       <PageHero
-        kicker="Our Blog"
-        title="Blog & Articles"
-        body={BLOG_INTRO}
-        crumbs={[{ label: "Blog" }]}
+        kicker={t("heroKicker")}
+        title={t("heroTitle")}
+        body={t("heroBody")}
+        crumbs={[{ label: t("heroKicker") }]}
       />
 
       <Section>
@@ -42,12 +40,9 @@ export default function BlogPage() {
                 <Newspaper />
               </IconTile>
               <h2 className="mt-5 font-heading text-lg font-semibold text-brand-ink">
-                Articles are on the way
+                {t("emptyTitle")}
               </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                We&apos;re preparing news and guidance on accounting, tax and
-                software. Check back soon.
-              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{t("emptyBody")}</p>
             </div>
           ) : (
             <>
@@ -67,7 +62,8 @@ export default function BlogPage() {
                     {feature.excerpt}
                   </p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
-                    Read more <ArrowRight className="size-4" />
+                    {t("readMore")}{" "}
+                    <ArrowRight className="size-4 rtl:-scale-x-100" />
                   </span>
                 </div>
               </Link>

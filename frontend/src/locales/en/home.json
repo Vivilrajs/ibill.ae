@@ -1,0 +1,61 @@
+{
+  "heroEyebrow": "Accounting & Software",
+  "heroKicker": "Welcome to IBILL",
+  "heroTitle": "Your Professional Accounting & Software Firm",
+  "heroBody": "IBILL Software and Consultancy, your trusted partner in accounts consultancy and software development. We empower businesses in India and the GCC region with innovative solutions and expert guidance.",
+  "heroServingNote": "Serving businesses across India and the GCC region.",
+  "heroFormTitle": "Request a call back",
+  "heroFormBody": "Tell us about your business and we'll be in touch.",
+  "valuePillars": [
+    { "label": "Expertise", "line": "Trusted guidance for your business" },
+    { "label": "Innovate", "line": "Cutting-edge software solutions" },
+    { "label": "Results", "line": "Proven track record of success" }
+  ],
+  "aboutKicker": "About IBILL",
+  "aboutTitle": "Real Accounting Services For You",
+  "aboutBody": [
+    "Experience personalized expertise with our comprehensive accounting solutions, tailored to meet the unique needs of your business, ensuring accuracy, efficiency, and growth.",
+    "At IBILL, we pride ourselves on our team of dedicated professionals, who bring years of experience and a passion for excellence to every project. Our goal is to provide exceptional guidance and support, helping businesses like yours thrive in an ever-changing landscape."
+  ],
+  "aboutBadgeValue": "UAE",
+  "aboutBadgeLabel": "Accounting & software",
+  "twoPracticesKicker": "What We Do",
+  "twoPracticesTitle": "Two practices, one partner",
+  "twoPracticesBody": "Choose the area you need help with - or bring us both.",
+  "servicesKicker": "Our Services",
+  "servicesTitle": "Expert services for every part of your business",
+  "servicesIntro": "We offer a range of expert services to meet the unique needs of your business.",
+  "whyKicker": "Why IBILL",
+  "whyTitle": "An Accounting Partner You Can Trust",
+  "whyBody": "Transforming accounting and business operations in the UAE.",
+  "whyPoints": ["Reliability", "Productivity", "Solutions"],
+  "whyStatsNote": "Transforming accounting and business operations for companies across the UAE.",
+  "whyChooseKicker": "Why Choose Us",
+  "whyChooseTitle": "What sets our team apart",
+  "whyChooseBody": "IBILL Accounting & Software offers expert accounting solutions, innovative software, and personalized support to UAE businesses, helping them streamline financial management, enhance efficiency, and drive growth.",
+  "whyChooseTags": [
+    { "label": "Expertise", "body": "Deep accounting and software knowledge applied to your goals." },
+    { "label": "Knowledge", "body": "Current on UAE regulation, tax, and compliance requirements." },
+    { "label": "Communication", "body": "Clear, responsive communication at every step of the engagement." }
+  ],
+  "processKicker": "How We Work",
+  "processTitle": "Working Together In Harmony",
+  "processBody": "Collaborative accounting solutions for UAE businesses. Expert teams working in harmony with yours. Streamlining finance, driving growth together.",
+  "processSteps": [
+    { "title": "Consultations", "body": "Expert analysis for your business. We identify areas for improvement and give personalized guidance for growth." },
+    { "title": "Choose Package", "body": "Select the perfect accounting solution, customized to fit your needs. Transparent pricing, no surprises." },
+    { "title": "Get Your Services", "body": "Start achieving financial clarity with expert support for your success. Streamlined accounting, simplified." }
+  ],
+  "faqKicker": "Our FAQs",
+  "faqTitle": "General Questions",
+  "testimonialsKicker": "Testimonials",
+  "testimonialsTitle": "What Clients Say",
+  "blogKicker": "Our Blog",
+  "blogTitle": "Blog & Articles",
+  "contactKicker": "Contact Us",
+  "contactTitle": "Get Information",
+  "contactBody": "Have a question or need assistance? We're here to help. Reach out to us today to learn more about our accounting services and software solutions.",
+  "contactPhone": "Phone",
+  "contactEmail": "Email",
+  "contactAddress": "Address"
+}
