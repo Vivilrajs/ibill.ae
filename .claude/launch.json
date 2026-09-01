@@ -1,6 +1,26 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "ibill-dev", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 3000 }
+    {
+      "name": "frontend",
+      "cwd": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "backend",
+      "cwd": "backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:dev"],
+      "port": 4000
+    },
+    {
+      "name": "backend-memdb",
+      "cwd": "backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:memdb"],
+      "port": 4000
+    }
   ]
 }

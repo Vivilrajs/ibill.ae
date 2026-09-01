@@ -1,90 +1,68 @@
 # IBILL - ibill.ae
 
-Marketing site and content admin for IBILL Software and Consultancy (accounting
-and software services, India and the GCC region).
+Marketing site and content admin for IBILL Software and Consultancy.
 
-## Stack
+Two apps in this repo:
 
-- Next.js 16 (App Router, React 19, TypeScript)
-- Tailwind CSS v4 + shadcn/ui (radix-nova), lucide-react icons
-- MongoDB + Mongoose - the store for all editable content and leads. When
-  `MONGODB_URI` is set it is authoritative (admin writes return 503 if Atlas is
-  unreachable, never a silent local write). `./.data/*.json` is used only when
-  `MONGODB_URI` is unset, for local dev
-- Env-based admin auth (signed httpOnly cookie), route guard in `src/proxy.ts`
+- **`frontend/`** - Vite + React SPA, prerendered to static HTML (`vite-react-ssg`).
+  Deploys to Vercel / Netlify.
+- **`backend/`** - NestJS + Mongoose API. Deploys to a VPS (Dockerfile / pm2).
+- **MongoDB Atlas** - the store for all content and leads (`ibill` database).
 
-## Getting started
+## Run locally
 
 ```bash
+# 1. API
+cd backend
+cp .env.example .env          # fill MONGODB_URI, ADMIN_*, AUTH_SECRET
 npm install
-cp .env.example .env.local   # then fill in the values
-npm run dev
+npm run seed                  # once - seeds Atlas
+npm start                     # http://localhost:4000/api
+#   ...or without Atlas:  npm run start:memdb   (in-memory MongoDB)
+
+# 2. Frontend
+cd ../frontend
+cp .env.example .env          # VITE_API_URL=http://localhost:4000/api
+npm install
+npm run dev                   # http://localhost:5173
 ```
 
-Open http://localhost:3000. The admin panel is at http://localhost:3000/admin.
+Admin panel: `http://localhost:5173/admin` (credentials from `backend/.env`).
 
-### Environment
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `AUTH_SECRET` | yes (for `/admin`) | Admin login. Changing the password or secret signs out all sessions. |
-| `MONGODB_URI` | recommended | MongoDB Atlas SRV URI - the store for content and leads. Whitelist the deployment IP in Atlas Network Access. If unset, falls back to `./.data/` (local dev only). |
-| `NEXT_PUBLIC_SITE_URL` | recommended | Canonical URL used for metadata and the sitemap. |
-| `CONTACT_NOTIFY_EMAIL` | no | Where contact-form notifications are sent. |
-| `RESEND_API_KEY` | no | Enables real email for contact notifications (via Resend). Without it, submissions are still stored and the notification is logged. |
-
-### Seeding MongoDB
-
-Once `MONGODB_URI` is set:
+## Build
 
 ```bash
-npm run seed
+cd backend  && npm run build   # -> dist/  (run: node dist/main.js)
+cd frontend && npm run build   # -> dist/  (static; VITE_* baked in at build time,
+                               #            prerenders 19 routes + sitemap/robots)
 ```
 
-This inserts the initial content (services, products, testimonials, FAQs,
-settings) into any collection that is currently empty. Safe to re-run.
+## Environment
 
-## Content model
+| App | Variable | Purpose |
+| --- | --- | --- |
+| backend | `MONGODB_URI`, `MONGODB_DB` | Atlas connection (db defaults to `ibill`) |
+| backend | `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `AUTH_SECRET` | admin login (Bearer token = HMAC; changing pw/secret invalidates tokens) |
+| backend | `FRONTEND_ORIGIN` | comma-separated CORS allowlist |
+| backend | `PORT` | default 4000 |
+| backend | `CONTACT_NOTIFY_EMAIL`, `RESEND_API_KEY` | contact-form email (optional) |
+| frontend | `VITE_API_URL` | backend base URL, e.g. `https://api.ibill.ae/api` |
+| frontend | `VITE_SITE_URL` | canonical / OG absolute URLs |
 
-All editable content lives in MongoDB (or `./.data/`) and is managed from
-`/admin`:
+## Deploy
 
-- **Services** - accounting and IT services, with category, icon and ordering
-- **Products** - software products (e.g. Salon Assist)
-- **Blog** - articles (drafts stay hidden from the site)
-- **Team** - profiles on the About page
-- **Testimonials** - client quotes on the home page
-- **Site settings** - contact details, social links, homepage counters, FAQs
-- **Leads** - contact-form submissions
+- **backend** (VPS): `docker build -t ibill-api backend` and run with the env
+  vars, or `npm ci && npm run build && pm2 start ecosystem.config.cjs`. Whitelist
+  the server IP in Atlas > Network Access.
+- **frontend** (Vercel/Netlify): build `npm run build`, output `dist/`.
+  `vercel.json` / `netlify.toml` / `public/_redirects` handle SPA fallback +
+  asset caching. Set `VITE_API_URL` + `VITE_SITE_URL` in the host build env.
 
-The build-time defaults for every collection are in `src/lib/content/`.
+## API surface
 
-## Structure
+`/api` base. Public GETs: `services` (`?category=`), `products`, `products/:slug`,
+`posts`, `posts/:slug`, `team`, `testimonials`, `faqs`, `settings`, `health`.
+`POST /api/contact`. `POST /api/auth/login` -> `{ token }`. Admin (Bearer):
+`/api/admin/content/:resource` CRUD, `/api/admin/settings`, `/api/admin/leads`.
 
-```
-src/
-  app/
-    (site)/            public pages (home, about, services, products, blog, contact)
-    admin/             login + (panel) authed screens
-    api/               contact, auth, admin CRUD
-  components/
-    site/              page sections and shared UI
-    admin/             admin shell and resource manager
-    ui/                shadcn primitives
-  lib/
-    content/           seed content (source of truth for defaults)
-    data.ts            public read helpers (Mongo, else seed content)
-    crud.ts            generic admin CRUD handlers
-    models.ts          Mongoose schemas
-    auth.ts            admin session helpers
-  proxy.ts             /admin route guard
-scripts/seed.ts        MongoDB seeder
-```
-
-## Notes
-
-- The brand logo is `public/agents.png` (client-supplied lockup), rendered on a
-  white chip so it stays legible on any header. Swap the file to update it, or
-  edit `src/components/site/logo.tsx`.
-- Section images use a branded gradient placeholder until real photography is
-  added; pass an `src` to `<Media>` or set the image URL on a record in `/admin`.
+See `MIGRATION.md` for the history of the split from the original Next.js app.

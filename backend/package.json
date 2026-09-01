@@ -1,0 +1,44 @@
+{
+  "name": "backend",
+  "version": "0.0.1",
+  "description": "IBILL API - NestJS + MongoDB",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "lint": "eslint \"src/**/*.ts\"",
+    "seed": "tsx src/seed/seed.ts",
+    "test": "vitest run",
+    "start:memdb": "node scripts/dev-mem-db.mjs dist/main.js",
+    "seed:memdb": "node scripts/dev-mem-db.mjs src/seed/seed.ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.6",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.1.6",
+    "@nestjs/mongoose": "^11.0.3",
+    "@nestjs/platform-express": "^11.1.6",
+    "mongoose": "^9.9.4",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.10",
+    "@nestjs/schematics": "^11.0.8",
+    "@nestjs/testing": "^11.1.6",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.15.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.20.0",
+    "mongodb-memory-server": "^11.2.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.23.0",
+    "typescript": "~5.7.3",
+    "vitest": "^3.0.0"
+  }
+}
