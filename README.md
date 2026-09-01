@@ -49,14 +49,50 @@ cd frontend && npm run build   # -> dist/  (static; VITE_* baked in at build tim
 | frontend | `VITE_API_URL` | backend base URL, e.g. `https://api.ibill.ae/api` |
 | frontend | `VITE_SITE_URL` | canonical / OG absolute URLs |
 
-## Deploy
+## Deploy - both on Vercel (one project, same origin)
 
-- **backend** (VPS): `docker build -t ibill-api backend` and run with the env
-  vars, or `npm ci && npm run build && pm2 start ecosystem.config.cjs`. Whitelist
-  the server IP in Atlas > Network Access.
-- **frontend** (Vercel/Netlify): build `npm run build`, output `dist/`.
-  `vercel.json` / `netlify.toml` / `public/_redirects` handle SPA fallback +
-  asset caching. Set `VITE_API_URL` + `VITE_SITE_URL` in the host build env.
+`vercel.json` + `api/index.ts` + root `package.json` wire it up:
+
+- `npm run vercel-build` builds `backend/dist` then the static `frontend/dist`.
+- `api/index.ts` is a serverless function that boots the compiled NestJS app and
+  serves every `/api/*` request (rewrite in `vercel.json`).
+- Everything else is served from `frontend/dist` (prerendered HTML first, SPA
+  fallback to `index.html`).
+- The frontend calls the API at the relative path `/api` - **no CORS**.
+
+**Set these Environment Variables in the Vercel project** (Settings > Environment
+Variables), then deploy:
+
+```
+MONGODB_URI           <Atlas SRV URI>
+MONGODB_DB            ibill
+ADMIN_EMAIL           admin@ibill.ae
+ADMIN_PASSWORD        <strong password>
+AUTH_SECRET           <long random string>
+CONTACT_NOTIFY_EMAIL  info@ibill.ae
+RESEND_API_KEY        <optional>
+SITE_URL             https://<your-domain>
+VITE_API_URL         /api
+VITE_SITE_URL        https://<your-domain>
+```
+
+Also add Vercel's outbound IP range (or `0.0.0.0/0`) to Atlas > Network Access.
+
+Notes:
+- Serverless = cold starts (~2-4s to boot Nest + connect Atlas). Public pages are
+  prerendered so visitors rarely hit a cold function; the admin panel will feel it
+  on the first request.
+- Prerendered HTML has the marketing copy but not the API-fed lists (they hydrate
+  client-side) - the frontend build can't reach the API. To also prerender the
+  lists, point `VITE_API_URL` at the *live* production API during the build
+  (`https://<domain>/api`) so SSG fetches real data.
+
+### Alternative: backend on a VPS
+
+`backend` still runs standalone: `docker build -t ibill-api backend`, or
+`cd backend && npm ci && npm run build && pm2 start ecosystem.config.cjs`. Then
+set the frontend's `VITE_API_URL` to the API's URL and `FRONTEND_ORIGIN` (on the
+API) to the frontend's origin for CORS.
 
 ## API surface
 

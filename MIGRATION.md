@@ -389,3 +389,24 @@ Repo root is now just `backend/` + `frontend/` + `README.md` + `MIGRATION.md` +
 
 Secrets: `backend/.env` (gitignored) carries `MONGODB_URI`, `ADMIN_*`,
 `AUTH_SECRET`, `CONTACT_NOTIFY_EMAIL` - same values the old root `.env.local` had.
+
+---
+
+## Vercel combined deploy (2026-09-01)
+
+Both apps deploy as **one Vercel project** (repo root):
+
+- `vercel.json` - `buildCommand: npm run vercel-build`, `outputDirectory:
+  frontend/dist`, `cleanUrls`, and rewrites: `/api/(.*) -> /api`, everything else
+  `-> /index.html` (static files win first).
+- `api/index.ts` - serverless entry; imports the compiled `backend/dist/create-app`,
+  `app.init()`, returns the Express instance, caches it across warm invocations.
+- root `package.json` - `vercel-build` script + the Nest runtime deps the
+  function needs (Vercel installs these and node-file-trace bundles them).
+- `backend/src/main.ts` split: `create-app.ts` builds the app (shared), `main.ts`
+  only adds `.listen()` for the VPS path.
+- Frontend uses `VITE_API_URL=/api` (relative, same origin) -> no CORS.
+
+Standalone frontend deploy configs (`frontend/vercel.json`, `netlify.toml`,
+`_redirects`) were removed. `backend/Dockerfile` + `ecosystem.config.cjs` stay for
+the VPS alternative.
