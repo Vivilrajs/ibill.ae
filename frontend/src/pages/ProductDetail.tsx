@@ -65,10 +65,7 @@ export default function ProductDetailPage() {
             )}
 
             {product.externalUrl && (
-              <Button
-                asChild
-                className="mt-8 bg-gradient-brand text-white hover:opacity-95"
-              >
+              <Button asChild className="mt-8">
                 <a
                   href={product.externalUrl}
                   target="_blank"

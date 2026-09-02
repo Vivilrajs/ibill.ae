@@ -11,7 +11,7 @@ export function HeroVideo({
   className,
 }: {
   src: string;
-  poster: string;
+  poster?: string;
   className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);

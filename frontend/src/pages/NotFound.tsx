@@ -12,7 +12,7 @@ export default function NotFound() {
           {t("notFound.title")}
         </h1>
         <p className="mt-2 text-white/70">{t("notFound.body")}</p>
-        <Button asChild className="mt-8 bg-white text-[#1a5493] hover:bg-white/90">
+        <Button asChild size="lg" className="mt-8 rounded-2xl px-6">
           <Link to="/">{t("notFound.back")}</Link>
         </Button>
       </div>

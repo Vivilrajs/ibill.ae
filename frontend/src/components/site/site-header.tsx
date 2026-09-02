@@ -25,15 +25,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const OVER_HERO_ROUTES = ["/", "/ar"];
-
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useLocation().pathname;
   const { dir } = useLang();
   const { t } = useTranslation();
-  const overHero = OVER_HERO_ROUTES.includes(pathname);
+  // Every public page opens with a dark hero band that the header sits over.
+  const overHero = true;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -129,7 +128,7 @@ export function SiteHeader() {
           />
           <Button
             asChild
-            className="hidden bg-gradient-brand text-white shadow-soft hover:opacity-95 lg:inline-flex"
+            className="hidden rounded-xl lg:inline-flex"
           >
             <Link to="/contact">{t("header.getConsultation")}</Link>
           </Button>
@@ -204,7 +203,7 @@ export function SiteHeader() {
                 </div>
                 <Button
                   asChild
-                  className="mt-2 bg-gradient-brand text-white"
+                  className="mt-2"
                   onClick={() => setOpen(false)}
                 >
                   <Link to="/contact">{t("header.getConsultation")}</Link>

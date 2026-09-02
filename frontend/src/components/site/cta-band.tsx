@@ -20,14 +20,6 @@ export function CtaBand({
   return (
     <section className="container-x py-16">
       <Reveal className="relative overflow-hidden rounded-3xl bg-gradient-brand-deep px-6 py-14 text-center sm:px-12 sm:py-16">
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "44px 44px",
-          }}
-        />
         <div className="relative mx-auto max-w-2xl">
           <h2 className="font-heading text-2xl font-semibold text-white sm:text-3xl text-balance">
             {title ?? t("cta.title")}
@@ -36,7 +28,7 @@ export function CtaBand({
           <Button
             asChild
             size="lg"
-            className="mt-8 bg-white text-[#1a5493] hover:bg-white/90"
+            className="mt-8 h-12 rounded-2xl px-6 text-[15px] ring-1 ring-white/25"
           >
             <Link to={href}>
               {cta ?? t("cta.button")}{" "}
