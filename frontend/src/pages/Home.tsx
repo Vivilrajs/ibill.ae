@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/nav";
-import { Img as Image } from "@/components/img";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading, Kicker, IconTile } from "@/components/site/primitives";
@@ -12,6 +11,7 @@ import { StatCounter } from "@/components/site/stat-counter";
 import { TestimonialsCarousel } from "@/components/site/testimonials-carousel";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { LogoMarquee } from "@/components/site/logo-marquee";
+import { HeroVideo } from "@/components/site/hero-video";
 import { CtaBand } from "@/components/site/cta-band";
 import { Icon } from "@/lib/icons";
 import { SERVICE_CATEGORIES } from "@/lib/site";
@@ -66,13 +66,10 @@ export default function HomePage() {
       <Seo pageKey="home" path="/" />
       {/* Hero */}
       <section className="relative -mt-16 overflow-hidden bg-[#0b1f33] pb-24 pt-32 text-white lg:-mt-20 lg:pb-32 lg:pt-40">
-        <Image
-          src="/images/hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
+        <HeroVideo
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/banner-video.mp4"
+          poster="/images/hero.jpg"
         />
         <div className="absolute inset-0 bg-gradient-brand-deep opacity-[0.92] mix-blend-multiply" />
         <div className="absolute inset-0 bg-[#0b1f33]/40" />

@@ -19,16 +19,16 @@ export function Logo({
   const content = (
     <span
       className={cn(
-        "inline-flex items-center rounded-lg bg-white px-2.5 py-1.5 ring-1 ring-black/5",
+        "inline-flex items-center rounded-lg bg-white px-2 py-1 ring-1 ring-black/5",
         className,
       )}
     >
       <Image
-        src="/agents.png"
+        src="/logo.png"
         alt="IBILL Software FZ-LLC"
-        width={365}
-        height={358}
-        className="h-11 w-auto lg:h-12"
+        width={2036}
+        height={599}
+        className="h-9 w-auto lg:h-10"
       />
     </span>
   );
