@@ -37,14 +37,8 @@ export function PageHero({
       ) : (
         <div className="absolute inset-0 bg-gradient-brand-deep" />
       )}
-      <div
-        className="absolute inset-0 opacity-[0.12]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
-        }}
-      />
+      {/* Darken behind the transparent header so the white logo/nav stay legible */}
+      <div className="absolute inset-x-0 top-0 h-44 bg-linear-to-b from-[#0b1f33] from-45% to-transparent" />
       <div className="container-x relative">
         <nav className="flex flex-wrap items-center gap-1.5 text-xs text-white/60">
           <Link to="/" className="hover:text-white">

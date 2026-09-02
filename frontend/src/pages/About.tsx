@@ -99,14 +99,6 @@ export default function AboutPage() {
 
       {/* Achievement / stats */}
       <section className="relative overflow-hidden bg-gradient-brand-deep py-20 text-white lg:py-24">
-        <div
-          className="absolute inset-0 opacity-[0.1]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "44px 44px",
-          }}
-        />
         <div className="container-x relative">
           <SectionHeading
             kicker={t("achievementKicker")}

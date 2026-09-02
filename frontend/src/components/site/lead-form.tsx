@@ -73,7 +73,7 @@ export function LeadForm({
       <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-brand text-white hover:opacity-95"
+        className="w-full"
       >
         {loading ? (
           <Loader2 className="size-4 animate-spin" />

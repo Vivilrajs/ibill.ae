@@ -1,8 +1,10 @@
 {
   "heroEyebrow": "Accounting & Software",
   "heroKicker": "Welcome to IBILL",
-  "heroTitle": "Your Professional Accounting & Software Firm",
-  "heroBody": "IBILL Software and Consultancy, your trusted partner in accounts consultancy and software development. We empower businesses in India and the GCC region with innovative solutions and expert guidance.",
+  "heroTitleLead": "Your Professional",
+  "heroTitleAccent": "Accounting &",
+  "heroTitleTail": "Software Firm",
+  "heroBody": "We empower businesses in India and the GCC region with innovative solutions and expert guidance.",
   "heroServingNote": "Serving businesses across India and the GCC region.",
   "heroFormTitle": "Request a call back",
   "heroFormBody": "Tell us about your business and we'll be in touch.",

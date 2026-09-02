@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "@/lib/nav";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading, Kicker, IconTile } from "@/components/site/primitives";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/motion";
@@ -65,37 +65,37 @@ export default function HomePage() {
     <>
       <Seo pageKey="home" path="/" />
       {/* Hero */}
-      <section className="relative -mt-16 overflow-hidden bg-[#0b1f33] pb-24 pt-32 text-white lg:-mt-20 lg:pb-32 lg:pt-40">
+      <section className="relative -mt-16 overflow-hidden bg-[#0b1f33] pb-16 pt-28 text-white sm:pb-24 sm:pt-32 lg:-mt-20 lg:pb-32 lg:pt-40">
         <HeroVideo
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/banner-video.mp4"
-          poster="/images/hero.jpg"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          src="/banner-video-1.mp4"
         />
-        <div className="absolute inset-0 bg-gradient-brand-deep opacity-[0.92] mix-blend-multiply" />
-        <div className="absolute inset-0 bg-[#0b1f33]/40" />
-        <div
-          className="absolute inset-0 opacity-[0.13]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "46px 46px",
-          }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(120%_70%_at_15%_0%,rgba(255,255,255,0.18),transparent_55%)]" />
-        <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
+        {/* Mobile: solid dark behind the top copy, fading so the video shows through the lower hero only */}
+        <div className="absolute inset-x-0 top-0 h-[560px] bg-linear-to-b from-[#0b1f33] from-58% to-transparent sm:hidden" />
+        {/* Desktop: directional scrim - dark under the text, video vivid on the far side */}
+        <div className="absolute inset-0 hidden bg-linear-to-r from-[#0b1f33] from-8% via-[#0b1f33]/70 via-50% to-[#0b1f33]/5 to-90% rtl:bg-linear-to-l sm:block" />
+        <div className="absolute inset-0 hidden bg-linear-to-t from-[#0b1f33]/90 via-[#0b1f33]/10 to-transparent sm:block" />
+        <div className="container-x relative grid items-center gap-12 sm:gap-14 lg:grid-cols-[1.05fr_0.95fr]">
           <Reveal>
-            <Kicker className="text-brand-200">{t("heroEyebrow")}</Kicker>
+            <Kicker className="text-brand-300">{t("heroEyebrow")}</Kicker>
             <p className="mt-5 text-sm font-medium uppercase tracking-[0.2em] text-white/60">
               {t("heroKicker")}
             </p>
-            <h1 className="mt-3 font-heading text-4xl font-bold leading-[1.08] text-balance sm:text-5xl lg:text-6xl">
-              {t("heroTitle")}
+            <h1 className="mt-3 font-heading text-[2.15rem] font-bold leading-[1.12] sm:text-5xl lg:text-[3.5rem]">
+              <span className="block">{t("heroTitleLead")}</span>
+              <span className="block text-brand-500">{t("heroTitleAccent")}</span>
+              <span className="block">{t("heroTitleTail")}</span>
             </h1>
+            <span className="mt-6 block h-1 w-16 rounded-full bg-brand-500" aria-hidden />
             <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
               {t("heroBody")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-white text-[#1a5493] hover:bg-white/90">
+              <Button
+                asChild
+                size="lg"
+                className="h-12 rounded-2xl px-6 text-[15px]"
+              >
                 <Link to="/services">
                   {t("common:buttons.exploreServices")}{" "}
                   <ArrowRight className="size-4 rtl:-scale-x-100" />
@@ -105,15 +105,24 @@ export default function HomePage() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                className="h-12 rounded-2xl border-white/40 bg-[#0b1f33]/40 px-6 text-[15px] text-white backdrop-blur-sm hover:bg-white/10 hover:text-white sm:bg-transparent sm:backdrop-blur-none"
               >
-                <Link to="/about">{t("common:buttons.learnMore")}</Link>
+                <Link to="/about">
+                  {t("common:buttons.learnMore")}{" "}
+                  <ArrowRight className="size-4 rtl:-scale-x-100" />
+                </Link>
               </Button>
             </div>
-            <p className="mt-8 text-sm text-white/55">{t("heroServingNote")}</p>
+            <div className="mt-8 flex items-start gap-3 rounded-2xl border border-white/15 bg-[#0b1f33]/55 px-4 py-3 text-sm text-white/80 backdrop-blur-sm sm:inline-flex sm:items-center sm:bg-white/5 sm:backdrop-blur-none">
+              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand-500/25 text-brand-200">
+                <Globe className="size-4" />
+              </span>
+              {t("heroServingNote")}
+            </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          {/* Callback form - desktop hero only; on mobile it lives in the dedicated Contact section below */}
+          <Reveal delay={0.1} className="hidden sm:block">
             <div className="rounded-3xl border border-white/15 bg-card p-6 text-card-foreground shadow-float sm:p-8">
               <h2 className="font-heading text-lg font-semibold text-brand-ink">
                 {t("heroFormTitle")}
@@ -241,14 +250,6 @@ export default function HomePage() {
 
       {/* Why IBILL + stats */}
       <section className="relative overflow-hidden bg-gradient-brand-deep py-20 text-white lg:py-28">
-        <div
-          className="absolute inset-0 opacity-[0.1]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "46px 46px",
-          }}
-        />
         <div className="container-x relative grid gap-14 lg:grid-cols-2">
           <Reveal>
             <Kicker className="text-brand-200">{t("whyKicker")}</Kicker>
