@@ -3,6 +3,7 @@ import { api } from "./api";
 import type {
   Service,
   Product,
+  Project,
   Post,
   TeamMember,
   Testimonial,
@@ -30,6 +31,15 @@ export const useProduct = (slug: string) =>
   useQuery({
     queryKey: ["products", slug],
     queryFn: () => api<{ item: Product }>(`/products/${slug}`).then((r) => r.item),
+  });
+
+export const useProjects = () =>
+  useQuery({ queryKey: ["projects"], queryFn: list<Project>("/projects") });
+
+export const useProject = (slug: string) =>
+  useQuery({
+    queryKey: ["projects", slug],
+    queryFn: () => api<{ item: Project }>(`/projects/${slug}`).then((r) => r.item),
   });
 
 export const usePosts = () =>

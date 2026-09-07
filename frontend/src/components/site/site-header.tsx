@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Menu, ChevronDown, ArrowRight } from "lucide-react";
+import { Menu, ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@/lib/nav";
 import { useLang } from "@/lib/lang-context";
@@ -57,7 +57,7 @@ export function SiteHeader() {
       <div className="container-x flex h-16 items-center justify-between gap-2 lg:h-20">
         <Logo variant={solid ? "default" : "inverted"} />
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1">
           {NAV_LINKS.map((link) => {
             const active =
               link.href === "/"
@@ -70,7 +70,7 @@ export function SiteHeader() {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium transition-colors",
+                    "whitespace-nowrap rounded-lg px-2 py-2 text-[13px] font-medium transition-colors xl:px-2.5 xl:text-sm",
                     solid
                       ? active
                         ? "text-brand-600"
@@ -87,7 +87,7 @@ export function SiteHeader() {
                 <Link
                   to={link.href}
                   className={cn(
-                    "inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1 whitespace-nowrap rounded-lg px-2 py-2 text-[13px] font-medium transition-colors xl:px-2.5 xl:text-sm",
                     solid
                       ? active
                         ? "text-brand-600"
@@ -128,7 +128,7 @@ export function SiteHeader() {
           />
           <Button
             asChild
-            className="hidden rounded-xl lg:inline-flex"
+            className="hidden rounded-xl 2xl:inline-flex"
           >
             <Link to="/contact">{t("header.getConsultation")}</Link>
           </Button>
@@ -153,57 +153,67 @@ export function SiteHeader() {
                   <Logo href={null} />
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-1 overflow-y-auto p-4">
-                {NAV_LINKS.map((link) =>
-                  "children" in link && link.children ? (
-                    <Accordion key={link.href} type="single" collapsible>
-                      <AccordionItem value={link.href} className="border-none">
-                        <AccordionTrigger className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary hover:no-underline">
-                          {label(link)}
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-1 ps-3">
-                          <Link
-                            to={link.href}
-                            onClick={() => setOpen(false)}
-                            className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-brand-600"
-                          >
-                            {t("header.allLink", { label: label(link) })}
-                          </Link>
-                          {link.children.map((c) => (
+              <div className="flex flex-col overflow-y-auto px-5 pb-6">
+                <nav className="border-t border-border">
+                  {NAV_LINKS.map((link) =>
+                    "children" in link && link.children ? (
+                      <Accordion key={link.href} type="single" collapsible>
+                        <AccordionItem
+                          value={link.href}
+                          className="border-b border-border"
+                        >
+                          <AccordionTrigger className="py-4 font-heading text-base font-bold uppercase tracking-wide text-brand-ink hover:no-underline [&_[data-slot=accordion-trigger-icon]]:hidden">
+                            <span className="flex w-full items-center justify-between">
+                              {label(link)}
+                              <ChevronRight className="size-5 text-brand-600 transition-transform rtl:-scale-x-100 group-aria-expanded/accordion-trigger:rotate-90" />
+                            </span>
+                          </AccordionTrigger>
+                          <AccordionContent className="pb-2">
                             <Link
-                              key={c.href}
-                              to={c.href}
+                              to={link.href}
                               onClick={() => setOpen(false)}
-                              className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-brand-600"
+                              className="block py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-ink/60 hover:text-brand-600"
                             >
-                              {t(`nav.${c.labelKey}`)}
+                              {t("header.allLink", { label: label(link) })}
                             </Link>
-                          ))}
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  ) : (
-                    <Link
-                      key={link.href}
-                      to={link.href}
-                      onClick={() => setOpen(false)}
-                      className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
-                    >
-                      {label(link)}
-                    </Link>
-                  ),
-                )}
-                <div className="mt-3 flex items-center justify-between rounded-lg bg-secondary/60 px-3 py-2">
+                            {link.children.map((c) => (
+                              <Link
+                                key={c.href}
+                                to={c.href}
+                                onClick={() => setOpen(false)}
+                                className="block border-t border-border/60 py-2.5 text-sm font-semibold uppercase tracking-wide text-brand-ink/60 hover:text-brand-600"
+                              >
+                                {t(`nav.${c.labelKey}`)}
+                              </Link>
+                            ))}
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        onClick={() => setOpen(false)}
+                        className="block border-b border-border py-4 font-heading text-base font-bold uppercase tracking-wide text-brand-ink transition-colors hover:text-brand-600"
+                      >
+                        {label(link)}
+                      </Link>
+                    ),
+                  )}
+                </nav>
+
+                <div className="mt-5 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-2.5">
                   <span className="text-sm font-medium">{t("language.label")}</span>
                   <LanguageSwitcher />
                 </div>
-                <div className="flex items-center justify-between rounded-lg bg-secondary/60 px-3 py-2">
+                <div className="mt-2 flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-2.5">
                   <span className="text-sm font-medium">{t("header.theme")}</span>
                   <ThemeToggle />
                 </div>
                 <Button
                   asChild
-                  className="mt-2"
+                  size="lg"
+                  className="mt-4 h-12 rounded-xl text-[15px]"
                   onClick={() => setOpen(false)}
                 >
                   <Link to="/contact">{t("header.getConsultation")}</Link>

@@ -70,6 +70,42 @@ export const PRODUCT_CONFIG: ResourceConfig = {
   ],
 };
 
+export const PROJECT_CONFIG: ResourceConfig = {
+  resource: "projects",
+  singular: "project",
+  columns: ["title", "client", "year", "published"],
+  defaults: {
+    slug: "",
+    title: "",
+    client: "",
+    category: "",
+    summary: "",
+    description: "",
+    coverImage: "",
+    gallery: [],
+    tags: [],
+    year: "",
+    externalUrl: "",
+    order: 0,
+    published: true,
+  },
+  fields: [
+    { name: "title", label: "Title", type: "text", required: true },
+    { name: "slug", label: "Slug", type: "text", required: true, help: "e.g. gulf-retail-portal" },
+    { name: "client", label: "Client", type: "text" },
+    { name: "category", label: "Category", type: "text", help: "e.g. Web development, Accounting" },
+    { name: "year", label: "Year", type: "text", help: "e.g. 2024" },
+    { name: "summary", label: "Summary", type: "textarea" },
+    { name: "description", label: "Description", type: "textarea" },
+    { name: "coverImage", label: "Cover image URL", type: "url" },
+    { name: "gallery", label: "Gallery", type: "stringList", help: "One image URL per line" },
+    { name: "tags", label: "Tags", type: "stringList", help: "One per line" },
+    { name: "externalUrl", label: "External URL", type: "url" },
+    { name: "order", label: "Order", type: "number" },
+    { name: "published", label: "Published", type: "boolean" },
+  ],
+};
+
 export const POST_CONFIG: ResourceConfig = {
   resource: "posts",
   singular: "post",

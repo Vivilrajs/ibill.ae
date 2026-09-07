@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 import {
   ServiceSchema,
   ProductSchema,
+  ProjectSchema,
   PostSchema,
   TeamMemberSchema,
   TestimonialSchema,
@@ -21,6 +22,7 @@ import {
 } from '../schemas/schemas';
 import { SERVICES } from './content/services';
 import { PRODUCTS } from './content/products';
+import { PROJECTS } from './content/projects';
 import { POSTS } from './content/posts';
 import { TEAM } from './content/team';
 import { TESTIMONIALS } from './content/testimonials';
@@ -62,6 +64,7 @@ async function main() {
 
   await seedCollection('services', m('Service', ServiceSchema), SERVICES);
   await seedCollection('products', m('Product', ProductSchema), PRODUCTS);
+  await seedCollection('projects', m('Project', ProjectSchema), PROJECTS);
   await seedCollection('posts', m('Post', PostSchema), POSTS);
   await seedCollection('team', m('TeamMember', TeamMemberSchema), TEAM);
   await seedCollection(

@@ -21,6 +21,7 @@ export class ContentService {
     @InjectConnection() private readonly connection: Connection,
     @InjectModel(MODELS.Service) private readonly service: Model<Doc>,
     @InjectModel(MODELS.Product) private readonly product: Model<Doc>,
+    @InjectModel(MODELS.Project) private readonly project: Model<Doc>,
     @InjectModel(MODELS.Post) private readonly post: Model<Doc>,
     @InjectModel(MODELS.TeamMember) private readonly team: Model<Doc>,
     @InjectModel(MODELS.Testimonial) private readonly testimonial: Model<Doc>,
@@ -35,6 +36,8 @@ export class ContentService {
         return this.service;
       case 'products':
         return this.product;
+      case 'projects':
+        return this.project;
       case 'posts':
         return this.post;
       case 'team':

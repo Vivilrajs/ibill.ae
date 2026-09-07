@@ -68,6 +68,43 @@ export const ProductSchema = new Schema<IProduct>(
   opts,
 );
 
+/* ---------------------------------- Project --------------------------------- */
+export interface IProject {
+  slug: string;
+  title: string;
+  client: string;
+  category: string;
+  summary: string;
+  description: string;
+  coverImage: string;
+  gallery: string[];
+  tags: string[];
+  year: string;
+  externalUrl: string;
+  order: number;
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export const ProjectSchema = new Schema<IProject>(
+  {
+    slug: { type: String, required: true, unique: true, trim: true },
+    title: { type: String, required: true, trim: true },
+    client: { type: String, default: '' },
+    category: { type: String, default: '' },
+    summary: { type: String, default: '' },
+    description: { type: String, default: '' },
+    coverImage: { type: String, default: '' },
+    gallery: { type: [String], default: [] },
+    tags: { type: [String], default: [] },
+    year: { type: String, default: '' },
+    externalUrl: { type: String, default: '' },
+    order: { type: Number, default: 0, index: true },
+    published: { type: Boolean, default: true },
+  },
+  opts,
+);
+
 /* ----------------------------------- Post ----------------------------------- */
 export interface IPost {
   slug: string;
@@ -247,6 +284,7 @@ export const LeadSchema = new Schema<ILead>(
 export const MODELS = {
   Service: 'Service',
   Product: 'Product',
+  Project: 'Project',
   Post: 'Post',
   TeamMember: 'TeamMember',
   Testimonial: 'Testimonial',
@@ -259,6 +297,7 @@ export const MODELS = {
 export const MONGOOSE_FEATURES = [
   { name: MODELS.Service, schema: ServiceSchema },
   { name: MODELS.Product, schema: ProductSchema },
+  { name: MODELS.Project, schema: ProjectSchema },
   { name: MODELS.Post, schema: PostSchema },
   { name: MODELS.TeamMember, schema: TeamMemberSchema },
   { name: MODELS.Testimonial, schema: TestimonialSchema },

@@ -34,18 +34,25 @@ export default function ServicesPage() {
               <Reveal key={key}>
                 <Link
                   to={href}
-                  className="group flex h-full flex-col rounded-3xl border border-border bg-card p-8 transition-all hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-gradient-brand p-8 text-white shadow-soft ring-1 ring-white/10 transition-all hover:-translate-y-1 hover:shadow-float"
                 >
-                  <IconTile size="lg">
+                  <div
+                    className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(120%_120%_at_100%_0%,#fff,transparent_55%)]"
+                    aria-hidden
+                  />
+                  <IconTile
+                    size="lg"
+                    className="relative bg-white/15 text-white ring-white/25"
+                  >
                     <Icon name={key === "it" ? "Code2" : "BarChart3"} />
                   </IconTile>
-                  <h2 className="mt-5 font-heading text-2xl font-semibold text-brand-ink">
+                  <h2 className="relative mt-5 font-heading text-2xl font-semibold text-white">
                     {t(`categories.${key}.title`)}
                   </h2>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="relative mt-2 flex-1 text-sm leading-relaxed text-white/80">
                     {t(`categories.${key}.intro`)}
                   </p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600">
+                  <span className="relative mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
                     {t("common:buttons.viewServices", { count })}{" "}
                     <ArrowRight className="size-4 transition-transform rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
                   </span>

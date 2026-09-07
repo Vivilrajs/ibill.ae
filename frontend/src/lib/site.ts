@@ -43,6 +43,7 @@ export const NAV_LINKS = [
     href: "/products",
     children: [{ labelKey: "salonAssist", href: "/products/salon-assist" }],
   },
+  { labelKey: "projects", href: "/projects" },
   { labelKey: "maintenancePlans", href: "/maintenance-plans" },
   { labelKey: "blog", href: "/blog" },
   { labelKey: "contact", href: "/contact" },

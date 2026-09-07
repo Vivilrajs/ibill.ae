@@ -33,6 +33,7 @@ const TITLES = {
     en: `Salon Assist - ${NAME}`,
     ar: `Salon Assist - ${NAME}`,
   },
+  "projects.html": { en: `Projects - ${NAME}`, ar: `المشاريع - ${NAME}` },
   "maintenance-plans.html": {
     en: `Annual Maintenance Plan - ${NAME}`,
     ar: `خطة الصيانة السنوية - ${NAME}`,
@@ -50,6 +51,7 @@ const PUBLIC_ROUTES = [
   "/services/it",
   "/products",
   "/products/salon-assist",
+  "/projects",
   "/maintenance-plans",
   "/blog",
   "/contact",

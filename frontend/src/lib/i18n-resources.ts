@@ -3,6 +3,7 @@ import enHome from "@/locales/en/home.json";
 import enAbout from "@/locales/en/about.json";
 import enServices from "@/locales/en/services.json";
 import enProducts from "@/locales/en/products.json";
+import enProjects from "@/locales/en/projects.json";
 import enBlog from "@/locales/en/blog.json";
 import enContact from "@/locales/en/contact.json";
 import enMaintenance from "@/locales/en/maintenance.json";
@@ -14,6 +15,7 @@ import arHome from "@/locales/ar/home.json";
 import arAbout from "@/locales/ar/about.json";
 import arServices from "@/locales/ar/services.json";
 import arProducts from "@/locales/ar/products.json";
+import arProjects from "@/locales/ar/projects.json";
 import arBlog from "@/locales/ar/blog.json";
 import arContact from "@/locales/ar/contact.json";
 import arMaintenance from "@/locales/ar/maintenance.json";
@@ -26,6 +28,7 @@ export const NS = [
   "about",
   "services",
   "products",
+  "projects",
   "blog",
   "contact",
   "maintenance",
@@ -40,6 +43,7 @@ export const resources = {
     about: enAbout,
     services: enServices,
     products: enProducts,
+    projects: enProjects,
     blog: enBlog,
     contact: enContact,
     maintenance: enMaintenance,
@@ -52,6 +56,7 @@ export const resources = {
     about: arAbout,
     services: arServices,
     products: arProducts,
+    projects: arProjects,
     blog: arBlog,
     contact: arContact,
     maintenance: arMaintenance,

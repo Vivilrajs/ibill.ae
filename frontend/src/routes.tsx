@@ -10,6 +10,8 @@ import Services from "@/pages/Services";
 import ServiceCategory from "@/pages/ServiceCategory";
 import Products from "@/pages/Products";
 import ProductDetail from "@/pages/ProductDetail";
+import Projects from "@/pages/Projects";
+import ProjectDetail from "@/pages/ProjectDetail";
 import MaintenancePlans from "@/pages/MaintenancePlans";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
@@ -20,6 +22,7 @@ import AdminLogin from "@/pages/admin/Login";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminServices from "@/pages/admin/Services";
 import AdminProducts from "@/pages/admin/Products";
+import AdminProjects from "@/pages/admin/Projects";
 import AdminBlog from "@/pages/admin/Blog";
 import AdminTeam from "@/pages/admin/Team";
 import AdminTestimonials from "@/pages/admin/Testimonials";
@@ -64,6 +67,18 @@ function siteTree(base: "" | "/ar"): RouteRecord[] {
       entry: "src/pages/ProductDetail.tsx",
       getStaticPaths: async () =>
         (await slugs("products", ["salon-assist"])).map((s) => p(`products/${s}`)),
+    },
+    {
+      path: p("projects"),
+      element: <Projects />,
+      entry: "src/pages/Projects.tsx",
+    },
+    {
+      path: p("projects/:slug"),
+      element: <ProjectDetail />,
+      entry: "src/pages/ProjectDetail.tsx",
+      getStaticPaths: async () =>
+        (await slugs("projects", [])).map((s) => p(`projects/${s}`)),
     },
     {
       path: p("maintenance-plans"),
@@ -113,6 +128,7 @@ export const routes: RouteRecord[] = [
           { index: true, element: <AdminDashboard /> },
           { path: "services", element: <AdminServices /> },
           { path: "products", element: <AdminProducts /> },
+          { path: "projects", element: <AdminProjects /> },
           { path: "blog", element: <AdminBlog /> },
           { path: "team", element: <AdminTeam /> },
           { path: "testimonials", element: <AdminTestimonials /> },
