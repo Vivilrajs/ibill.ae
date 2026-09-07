@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import {
   Wrench,
   Package,
+  Briefcase,
   Newspaper,
   Users,
   Quote,
@@ -18,6 +19,7 @@ import {
 export default function AdminDashboard() {
   const services = useAdminList("services").data ?? [];
   const products = useAdminList("products").data ?? [];
+  const projects = useAdminList("projects").data ?? [];
   const posts = useAdminList("posts").data ?? [];
   const team = useAdminList("team").data ?? [];
   const testimonials = useAdminList("testimonials").data ?? [];
@@ -27,6 +29,7 @@ export default function AdminDashboard() {
   const cards = [
     { label: "Services", count: services.length, to: "/admin/services", icon: Wrench },
     { label: "Products", count: products.length, to: "/admin/products", icon: Package },
+    { label: "Projects", count: projects.length, to: "/admin/projects", icon: Briefcase },
     { label: "Blog posts", count: posts.length, to: "/admin/blog", icon: Newspaper },
     { label: "Team members", count: team.length, to: "/admin/team", icon: Users },
     { label: "Testimonials", count: testimonials.length, to: "/admin/testimonials", icon: Quote },

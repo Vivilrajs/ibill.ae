@@ -1,0 +1,21 @@
+{
+  "listHeroKicker": "Our Work",
+  "listHeroTitle": "Projects & case studies",
+  "listHeroBody": "A selection of accounting and software projects delivered for clients across the UAE and beyond.",
+  "empty": "Project case studies are being prepared. Check back soon.",
+  "viewProject": "View project",
+  "detailHeroKicker": "Project",
+  "overview": "Overview",
+  "gallery": "Gallery",
+  "galleryAlt": "{{title}} image {{index}}",
+  "visit": "Visit project",
+  "meta": {
+    "client": "Client",
+    "category": "Category",
+    "year": "Year",
+    "tags": "Tags"
+  },
+  "detailCtaTitle": "Have a project in mind?",
+  "detailCtaBody": "Tell us what you're building and we'll help you scope it.",
+  "detailCtaButton": "Start a project"
+}

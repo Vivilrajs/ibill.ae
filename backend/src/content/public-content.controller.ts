@@ -28,6 +28,16 @@ export class PublicContentController {
     return { item: await this.content.publicBySlug('products', slug) };
   }
 
+  @Get('projects')
+  async projects() {
+    return { items: await this.content.list('projects', false) };
+  }
+
+  @Get('projects/:slug')
+  async project(@Param('slug') slug: string) {
+    return { item: await this.content.publicBySlug('projects', slug) };
+  }
+
   @Get('posts')
   async posts() {
     return { items: await this.content.list('posts', false) };

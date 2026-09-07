@@ -2,6 +2,7 @@ import { z, type ZodType } from 'zod';
 import { MODELS } from '../schemas/schemas';
 import { SERVICES } from '../seed/content/services';
 import { PRODUCTS } from '../seed/content/products';
+import { PROJECTS } from '../seed/content/projects';
 import { POSTS } from '../seed/content/posts';
 import { TEAM } from '../seed/content/team';
 import { TESTIMONIALS } from '../seed/content/testimonials';
@@ -39,6 +40,22 @@ const productCreate = z.object({
   heroImage: z.string().max(500).optional().default(''),
   gallery: z.array(z.string().max(500)).max(20).optional().default([]),
   features: strArr.optional().default([]),
+  order: z.number().int().optional().default(0),
+  published: z.boolean().optional().default(true),
+});
+
+const projectCreate = z.object({
+  slug,
+  title: z.string().min(1).max(200),
+  client: z.string().max(140).optional().default(''),
+  category: z.string().max(80).optional().default(''),
+  summary: z.string().max(400).optional().default(''),
+  description: z.string().max(6000).optional().default(''),
+  coverImage: z.string().max(500).optional().default(''),
+  gallery: z.array(z.string().max(500)).max(20).optional().default([]),
+  tags: z.array(z.string().max(60)).max(20).optional().default([]),
+  year: z.string().max(20).optional().default(''),
+  externalUrl: z.string().max(500).optional().default(''),
   order: z.number().int().optional().default(0),
   published: z.boolean().optional().default(true),
 });
@@ -112,6 +129,13 @@ export const RESOURCES: Record<string, ResourceDef> = {
     seed: PRODUCTS as unknown as Record<string, unknown>[],
     createSchema: productCreate,
     updateSchema: partial(productCreate),
+    sort: { order: 1, createdAt: -1 },
+  },
+  projects: {
+    model: MODELS.Project,
+    seed: PROJECTS as unknown as Record<string, unknown>[],
+    createSchema: projectCreate,
+    updateSchema: partial(projectCreate),
     sort: { order: 1, createdAt: -1 },
   },
   posts: {

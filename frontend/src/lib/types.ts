@@ -30,6 +30,22 @@ export interface Product extends WithId {
   published: boolean;
 }
 
+export interface Project extends WithId {
+  slug: string;
+  title: string;
+  client: string;
+  category: string;
+  summary: string;
+  description: string;
+  coverImage: string;
+  gallery: string[];
+  tags: string[];
+  year: string;
+  externalUrl: string;
+  order: number;
+  published: boolean;
+}
+
 export interface Post extends WithId {
   slug: string;
   title: string;
@@ -104,6 +120,7 @@ export interface Lead extends WithId {
 export type ResourceKey =
   | "services"
   | "products"
+  | "projects"
   | "posts"
   | "team"
   | "testimonials"

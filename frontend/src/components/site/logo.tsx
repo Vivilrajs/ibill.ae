@@ -36,7 +36,7 @@ export function Logo({
       width={2075}
       height={669}
       className={cn(
-        "h-10 w-auto lg:h-11",
+        "h-12 w-auto sm:h-11 lg:h-12",
         dark && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]",
         className,
       )}
